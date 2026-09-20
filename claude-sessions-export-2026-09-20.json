@@ -1,0 +1,1952 @@
+{
+  "totalCost": 74.800882,
+  "totalTokens": 81266319,
+  "startDate": "2026-09-20T03:31:27.572Z",
+  "endDate": "2026-09-21T03:31:27.572Z",
+  "sessions": [
+    {
+      "sessionId": "7abb3a48-6ade-477b-b95d-211383471ef4",
+      "initialPrompt": "can you install XCode 27 - ``` ==> Installing omlx from jundot/omlx Error: Your Xcode (15.3) at /Applications/Xcode.app is too outdated. Please update to Xcode 27.0 (or delete it). Xcode can be updated from the App Store. ```",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/localjev",
+      "startedAt": 1789879085859,
+      "endedAt": 1789880504483.7097,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-localjev/7abb3a48-6ade-477b-b95d-211383471ef4.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.1555104,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 356253,
+        "main": {
+          "input": 22,
+          "output": 2168,
+          "cacheWrite": 13983,
+          "cacheRead": 340080,
+          "total": 356253
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 37074,
+        "limit": 1000000,
+        "percent": 3.7,
+        "at": 1789879530079
+      }
+    },
+    {
+      "sessionId": "5ed23762-ceb1-4bd9-8a32-d0e01a46ac22",
+      "initialPrompt": "can you get this working `` ./z_jev.sh https://github.com/spencerlepine/printful-sdk-js-v2/pull/27 `` - do an e2e test",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/localjev",
+      "startedAt": 1789880504385,
+      "endedAt": 1789881631093.0566,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-localjev/5ed23762-ceb1-4bd9-8a32-d0e01a46ac22.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 2.2783206999999996,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 2700370,
+        "main": {
+          "input": 90,
+          "output": 17870,
+          "cacheWrite": 76060,
+          "cacheRead": 2606350,
+          "total": 2700370
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 77099,
+        "limit": 1000000,
+        "percent": 7.7,
+        "at": 1789881440337
+      }
+    },
+    {
+      "sessionId": "8911d0ce-9fa9-4104-b7e7-eb5443a5a9a0",
+      "initialPrompt": "I want to build out this portion of my script: /Users/notspencer/workplace/localjev/z_jev.sh ``` questions: { safeToMerge: { type: \"score\", instructions: \"Analyze the full pull request diff text block. Determine if it is architecturally sound, secure",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/localjev",
+      "startedAt": 1789881630995,
+      "endedAt": 1789882781583.5369,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-localjev/8911d0ce-9fa9-4104-b7e7-eb5443a5a9a0.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.883397,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1478601,
+        "main": {
+          "input": 50,
+          "output": 24041,
+          "cacheWrite": 52540,
+          "cacheRead": 1401970,
+          "total": 1478601
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 76707,
+        "limit": 1000000,
+        "percent": 7.7,
+        "at": 1789882743620
+      }
+    },
+    {
+      "sessionId": "45112d12-19a8-4b17-940a-09b48c516f2b",
+      "initialPrompt": "Can you simplify this into a simple one-liner curl request? the request body can be multi-line tho.. ``` #!/usr/bin/env bash # jev.sh - ask a local Jev API whether a change is safe to approve on sight. # # This is a triage label, not a code review. I",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/localjev",
+      "startedAt": 1789882781485,
+      "endedAt": 1789883968402.3206,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-localjev/45112d12-19a8-4b17-940a-09b48c516f2b.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.372811,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 285329,
+        "main": {
+          "input": 14,
+          "output": 2855,
+          "cacheWrite": 16564,
+          "cacheRead": 265896,
+          "total": 285329
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 42833,
+        "limit": 1000000,
+        "percent": 4.3,
+        "at": 1789883892876
+      }
+    },
+    {
+      "sessionId": "34d2fe9e-2ad2-4fde-85eb-a4cdb5f9d58d",
+      "initialPrompt": "Can you simplify this into a simple one-liner curl request? the request body can be multi-line tho.. ``` #!/usr/bin/env bash # jev.sh - ask a local Jev API whether a change is safe to approve on sight. # # This is a triage label, not a code review. I",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/localjev",
+      "startedAt": 1789883968303,
+      "endedAt": 1789885480313.702,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-localjev/34d2fe9e-2ad2-4fde-85eb-a4cdb5f9d58d.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.0197432499999997,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 860303,
+        "main": {
+          "input": 36,
+          "output": 9184,
+          "cacheWrite": 32952,
+          "cacheRead": 818131,
+          "total": 860303
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 58821,
+        "limit": 1000000,
+        "percent": 5.9,
+        "at": 1789885229629
+      }
+    },
+    {
+      "sessionId": "9f12f91f-d8bd-4c3c-b9df-bee786c4f499",
+      "initialPrompt": "I upgrade from MacOs 16 to 27 recently, and this broke `` Please see `nvm --help` or https://github.com/nvm-sh/nvm#nvmrc for more information. Now using node v20.11.1 (npm v) ➜ portfolio git:(v3) npm start env: node: Bad CPU type in executable `` ple",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/portfolio",
+      "startedAt": 1789884482038,
+      "endedAt": 1789884656206.525,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-portfolio/9f12f91f-d8bd-4c3c-b9df-bee786c4f499.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.152815,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 258361,
+        "main": {
+          "input": 14,
+          "output": 4003,
+          "cacheWrite": 16004,
+          "cacheRead": 238340,
+          "total": 258361
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 39404,
+        "limit": 1000000,
+        "percent": 3.9,
+        "at": 1789884622494
+      }
+    },
+    {
+      "sessionId": "7007a716-c946-45a3-b2d5-ba3494c2b343",
+      "initialPrompt": "\"/home/runner/work/portfolio/portfolio/content/2026-09-19-self-hosting-jev-on-macos-for-free/article.md\" Cause: Unexpected character `5` (U+0035) before name, expected a character that can start a name, such as a letter, `$`, or `_` Details: { \"colum",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/blog",
+      "startedAt": 1789885701411,
+      "endedAt": 1789885743669.5146,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-blog/7007a716-c946-45a3-b2d5-ba3494c2b343.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0986366,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 212521,
+        "main": {
+          "input": 12,
+          "output": 1233,
+          "cacheWrite": 13587,
+          "cacheRead": 197689,
+          "total": 212521
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 36361,
+        "limit": 1000000,
+        "percent": 3.6,
+        "at": 1789885740784
+      }
+    },
+    {
+      "sessionId": "ee8fc7ec-90e5-4703-947e-498e69d48136",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/claude-dashboard/README.md - Help me create a concise README for this open source project, period. I'm gonna publish this Claude Code dashboard to GitHub. At the top, I'm also gonna have a one-liner to render a screens",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx/claude-dashboard",
+      "startedAt": 1789939014550,
+      "endedAt": 1789939552821.471,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx-claude-dashboard/ee8fc7ec-90e5-4703-947e-498e69d48136.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.955048,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 883950,
+        "main": {
+          "input": 38,
+          "output": 6903,
+          "cacheWrite": 33021,
+          "cacheRead": 843988,
+          "total": 883950
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 56584,
+        "limit": 1000000,
+        "percent": 5.7,
+        "at": 1789939456605
+      }
+    },
+    {
+      "sessionId": "9390c640-d3b0-44da-8d47-66e9c2c34b12",
+      "initialPrompt": "How can I bypass this validation on vercel? I can't change the git email, I need to disable this in vercel portal ```The deployment was blocked because the commit email 60903378+username@users.noreply.github.com could not be matched to a GitHub accou",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer",
+      "startedAt": 1789939820249,
+      "endedAt": 1789940541124.3726,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer/9390c640-d3b0-44da-8d47-66e9c2c34b12.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.3170774,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 150058,
+        "main": {
+          "input": 8,
+          "output": 3523,
+          "cacheWrite": 27632,
+          "cacheRead": 118895,
+          "total": 150058
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 38915,
+        "limit": 1000000,
+        "percent": 3.9,
+        "at": 1789940287593
+      }
+    },
+    {
+      "sessionId": "bf0ce707-1d7e-46a6-b25f-74313dbe69d7",
+      "initialPrompt": "/Users/notspencer/workplace/portfolio/.github/workflows/vercel-deploy.yml This team has 2 projects using Node.js 20 or older. New builds will fail starting September 30, 2026. -> Upgrade to Node.js 24 --- I got this error when I tried to deploying to",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/portfolio",
+      "startedAt": 1789940386382,
+      "endedAt": 1789941639883.8992,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-portfolio/bf0ce707-1d7e-46a6-b25f-74313dbe69d7.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.156204,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 306596,
+        "main": {
+          "input": 18,
+          "output": 2945,
+          "cacheWrite": 17058,
+          "cacheRead": 286575,
+          "total": 306596
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 39897,
+        "limit": 1000000,
+        "percent": 4,
+        "at": 1789941093614
+      }
+    },
+    {
+      "sessionId": "13121792-9973-4f4d-9892-9e24b8a315de",
+      "initialPrompt": "Upgrade prompt: github/workflows/github-pages-deploy.yml /Users/notspencer/workplace/blog/.github/workflows/github-pages-deploy.yml This team has 2 projects using Node.js 20 or older. New builds will fail starting September 30, 2026. -> Upgrade to No",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/blog",
+      "startedAt": 1789940457888,
+      "endedAt": 1789940975071.8271,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-blog/13121792-9973-4f4d-9892-9e24b8a315de.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.7764685,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 770530,
+        "main": {
+          "input": 36,
+          "output": 5704,
+          "cacheWrite": 26331,
+          "cacheRead": 738459,
+          "total": 770530
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 49413,
+        "limit": 1000000,
+        "percent": 4.9,
+        "at": 1789940690432
+      }
+    },
+    {
+      "sessionId": "2ef6d1cc-71a6-4dee-aaed-8fcd66770895",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/.claude/settings.json --- Can you find the sound effects where I added a variation to the pitch thing? I want to add more variation and increase the randomness. Currently it was so subtle I couldn't even notice the dif",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789940588398,
+      "endedAt": 1789941352939.2703,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/2ef6d1cc-71a6-4dee-aaed-8fcd66770895.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.1716972,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 270119,
+        "main": {
+          "input": 14,
+          "output": 4194,
+          "cacheWrite": 19875,
+          "cacheRead": 246036,
+          "total": 270119
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 43245,
+        "limit": 1000000,
+        "percent": 4.3,
+        "at": 1789940708467
+      }
+    },
+    {
+      "sessionId": "41b93bb3-c9c3-4c6b-be7d-5edd3b3476c5",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/.claude/settings.json Please add this in PostToolUse: ```` { \"matcher\": \"Bash\", \"hooks\": [ { \"type\": \"command\", \"command\": \"grep -Eq '\\\"command\\\": *\\\"([^\\\"]*(&&|\\\\|\\\\||;|\\\\|) *)?git +commit' && command -v afplay > /dev",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789941352842,
+      "endedAt": 1789942330691.5208,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/41b93bb3-c9c3-4c6b-be7d-5edd3b3476c5.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.1028852,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 147802,
+        "main": {
+          "input": 8,
+          "output": 1116,
+          "cacheWrite": 13532,
+          "cacheRead": 133146,
+          "total": 147802
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 38337,
+        "limit": 1000000,
+        "percent": 3.8,
+        "at": 1789942163349
+      }
+    },
+    {
+      "sessionId": "3fd20861-28e4-4555-818e-45c91bdc156c",
+      "initialPrompt": "can you please create a symlink? source: /Users/notspencer/workplace/sfx/.claude/sfx -> this entire folder. I want the symlink destination to be ~/.claude/sfx",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789942330592,
+      "endedAt": 1789945294849.0432,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/3fd20861-28e4-4555-818e-45c91bdc156c.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.9972701000000002,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1434289,
+        "main": {
+          "input": 56,
+          "output": 32837,
+          "cacheWrite": 61089,
+          "cacheRead": 1340307,
+          "total": 1434289
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 73667,
+        "limit": 1000000,
+        "percent": 7.4,
+        "at": 1789944489846
+      }
+    },
+    {
+      "sessionId": "08064030-378d-4cda-ac99-2672fc96b704",
+      "initialPrompt": "File to update: /Users/notspencer/workplace/sfx/.claude/settings.json ## Template ``` \"PreToolUse\": [ { \"matcher\": \"Bash\", \"hooks\": [ { \"type\": \"command\", \"command\": \"grep -Eq '\\\"command\\\": *\\\"([^\\\"]*(&&|\\\\|\\\\||;|\\\\|) *)?git +commit' && command -v af",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789945294751,
+      "endedAt": 1789948116119.8467,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/08064030-378d-4cda-ac99-2672fc96b704.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 7.214390500000001,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 9167551,
+        "main": {
+          "input": 120,
+          "output": 37912,
+          "cacheWrite": 163829,
+          "cacheRead": 8965690,
+          "total": 9167551
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 188141,
+        "limit": 1000000,
+        "percent": 18.8,
+        "at": 1789948092025
+      }
+    },
+    {
+      "sessionId": "1abdb0ea-c413-4efb-9928-ce949e9d6246",
+      "initialPrompt": "can you make this file trimeed to 15 sec and slowly fade out - /Users/notspencer/workplace/sfx/.claude/sfx/tryna.mp3 ─────────────────────────────────────────────────────────────",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789946226529,
+      "endedAt": 1789946372810.8076,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/1abdb0ea-c413-4efb-9928-ce949e9d6246.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.405926,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 273491,
+        "main": {
+          "input": 14,
+          "output": 3003,
+          "cacheWrite": 20472,
+          "cacheRead": 250002,
+          "total": 273491
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 44327,
+        "limit": 1000000,
+        "percent": 4.4,
+        "at": 1789946353731
+      }
+    },
+    {
+      "sessionId": "dcfb8846-89bc-4e8e-9547-eed1bbb6ce59",
+      "initialPrompt": "run npm install, just run it",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789946372711,
+      "endedAt": 1789946395060.757,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/dcfb8846-89bc-4e8e-9547-eed1bbb6ce59.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0222585,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 32342,
+        "main": {
+          "input": 10,
+          "output": 122,
+          "cacheWrite": 9195,
+          "cacheRead": 23015,
+          "total": 32342
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-haiku-4-5-20251001",
+        "used": 32342,
+        "limit": 200000,
+        "percent": 16.2,
+        "at": 1789946384140
+      }
+    },
+    {
+      "sessionId": "863310ee-0628-4cba-a7df-641cd104a68d",
+      "initialPrompt": "When do these get triggered? \"error\": [\"GladosMixedError1.mp3\", \"GladosMixedError2.mp3\"], - i need to know the matcher and hook triggere vent that it get's applied to in the .claude/settings.json file..",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-sound-fx",
+      "startedAt": 1789947231256,
+      "endedAt": 1789947510137.9993,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-sound-fx/863310ee-0628-4cba-a7df-641cd104a68d.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0701943,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 270200,
+        "main": {
+          "input": 67,
+          "output": 2160,
+          "cacheWrite": 12265,
+          "cacheRead": 255708,
+          "total": 270200
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-haiku-4-5-20251001",
+        "used": 36758,
+        "limit": 200000,
+        "percent": 18.4,
+        "at": 1789947354682
+      }
+    },
+    {
+      "sessionId": "a9fbb9c6-48c3-4d56-a8e3-144a55f6ce53",
+      "initialPrompt": "'/Users/notspencer/workplace/sfx/.claude/settings.json' - add a hook. I want to add this sound effect to PreToolUse - /Users/notspencer/workplace/sfx/.claude/sfx/pwwwnd.mp3 It should match: `cr --update-revision` commands. Here's the usage patterns i",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789948417329,
+      "endedAt": 1789948589835.6672,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/a9fbb9c6-48c3-4d56-a8e3-144a55f6ce53.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0676305,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 114288,
+        "main": {
+          "input": 25,
+          "output": 4535,
+          "cacheWrite": 17133,
+          "cacheRead": 92595,
+          "total": 114288
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-haiku-4-5-20251001",
+        "used": 40944,
+        "limit": 200000,
+        "percent": 20.5,
+        "at": 1789948456947
+      }
+    },
+    {
+      "sessionId": "e7772dae-c617-4dbc-b95c-4ee4f4097c8e",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/.claude/settings.json - I created this file that adds a bunch of sound effect hooks during my AI agents running, period. This is just humorous and additive. It's not actual functionality, period. I added a bunch of hoo",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789948589736,
+      "endedAt": 1789949806414.6675,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/e7772dae-c617-4dbc-b95c-4ee4f4097c8e.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.5572444999999997,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 665884,
+        "main": {
+          "input": 22,
+          "output": 28307,
+          "cacheWrite": 55716,
+          "cacheRead": 581839,
+          "total": 665884
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 80661,
+        "limit": 1000000,
+        "percent": 8.1,
+        "at": 1789949634922
+      }
+    },
+    {
+      "sessionId": "2dd7bee0-5340-4ff2-b34f-b6eb534fd504",
+      "initialPrompt": "File to edit: /Users/notspencer/workplace/sfx/.claude/settings.json I want to add a sound effect for this use-case: ``` - Split test out of the existing build matcher so pass/fail gets its own pair — build success and test success feel different ``` ",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789949314289,
+      "endedAt": 1789949809393.657,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/2dd7bee0-5340-4ff2-b34f-b6eb534fd504.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.390734,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 909829,
+        "main": {
+          "input": 32,
+          "output": 22291,
+          "cacheWrite": 40864,
+          "cacheRead": 846642,
+          "total": 909829
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 67537,
+        "limit": 1000000,
+        "percent": 6.8,
+        "at": 1789949665615
+      }
+    },
+    {
+      "sessionId": "692fc980-8e49-459e-9864-b7d27832535c",
+      "initialPrompt": "File to edit: /Users/notspencer/workplace/sfx/.claude/settings.json I want to add a sound effect for this use-case: I want to fire this whenever the user changes the setting \"/model\" and selects Fable. is this possible without getting too hacky? Also",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789949806315,
+      "endedAt": 1789950324280.523,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/692fc980-8e49-459e-9864-b7d27832535c.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.403615,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1030860,
+        "main": {
+          "input": 40,
+          "output": 17553,
+          "cacheWrite": 67629,
+          "cacheRead": 945638,
+          "total": 1030860
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 57351,
+        "limit": 1000000,
+        "percent": 5.7,
+        "at": 1789950199226
+      }
+    },
+    {
+      "sessionId": "b54969cd-0c29-41ec-a606-ea37cb8188c7",
+      "initialPrompt": "~/.claude/settings.json & ~/.claude/sfx/* - can you remove the symlinks here? just keep it a real .json file. if needed, copy over the local copy duplicate int hat global folder",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/sfx",
+      "startedAt": 1789949883215,
+      "endedAt": 1789950030124.025,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-sfx/b54969cd-0c29-41ec-a606-ea37cb8188c7.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.415281,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 330745,
+        "main": {
+          "input": 16,
+          "output": 2858,
+          "cacheWrite": 18819,
+          "cacheRead": 309052,
+          "total": 330745
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 44678,
+        "limit": 1000000,
+        "percent": 4.5,
+        "at": 1789949949683
+      }
+    },
+    {
+      "sessionId": "16dea456-7737-4f63-afd5-140d69fec563",
+      "initialPrompt": "help me write this file: '/Users/notspencer/workplace/localjev/binary-request.sh' - it will be used like binary-request.sh \"my text prompt\", and the JEV request should return `` questions: { answer: { \"yes or no\" } `` I want to create this single cur",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/localjev",
+      "startedAt": 1789950525121,
+      "endedAt": 1789951127447.1255,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-localjev/16dea456-7737-4f63-afd5-140d69fec563.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.38975360000000003,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 624489,
+        "main": {
+          "input": 24,
+          "output": 10894,
+          "cacheWrite": 37246,
+          "cacheRead": 576325,
+          "total": 624489
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 60563,
+        "limit": 1000000,
+        "percent": 6.1,
+        "at": 1789950849947
+      }
+    },
+    {
+      "sessionId": "18200871-6d15-4e47-baac-859e8c4448a0",
+      "initialPrompt": "Please amend the head commit and remove Claude from it. Amend this in place force lease and then force push to the remote branch.",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/blog",
+      "startedAt": 1789953607817,
+      "endedAt": 1789953657118.3018,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-blog/18200871-6d15-4e47-baac-859e8c4448a0.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0837316,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 134574,
+        "main": {
+          "input": 8,
+          "output": 535,
+          "cacheWrite": 11063,
+          "cacheRead": 122968,
+          "total": 134574
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 33954,
+        "limit": 1000000,
+        "percent": 3.4,
+        "at": 1789953633726
+      }
+    },
+    {
+      "sessionId": "955c776f-50b6-427f-907d-3524190bfd18",
+      "initialPrompt": "## Context ### Source Code /Users/notspencer/workplace/portfolio - react app, single page, static html /Users/notspencer/workplace/blog - docusaurus package with blog content, static html files, single-page javascript application ```bash # first buil",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace",
+      "startedAt": 1789954157763,
+      "endedAt": 1789955486794.058,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace/955c776f-50b6-427f-907d-3524190bfd18.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.7978015000000003,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1897291,
+        "main": {
+          "input": 66,
+          "output": 16274,
+          "cacheWrite": 47244,
+          "cacheRead": 1833707,
+          "total": 1897291
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 70183,
+        "limit": 1000000,
+        "percent": 7,
+        "at": 1789954876866
+      }
+    },
+    {
+      "sessionId": "0b0f9194-b2d8-4baa-acfd-2dea7aba0f4d",
+      "initialPrompt": "existing page: /Users/notspencer/workplace/claude-dashboard/frontend/index.html frontend/index.html frontend/styles.css new page: frontend/sessions.html 1. Create a placeholder html page with the title \"Sessions Audit\" 2. Add a link to the header of ",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789954982871,
+      "endedAt": 1789960476882.9175,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/0b0f9194-b2d8-4baa-acfd-2dea7aba0f4d.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 19.572911400000002,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 24283973,
+        "main": {
+          "input": 256,
+          "output": 150368,
+          "cacheWrite": 412078,
+          "cacheRead": 23721271,
+          "total": 24283973
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 336183,
+        "limit": 1000000,
+        "percent": 33.6,
+        "at": 1789960315195
+      }
+    },
+    {
+      "sessionId": "431ba261-5359-444a-befd-715b49166064",
+      "initialPrompt": "Can you help me extend the header bar in these widgets: ``` $1.80 idle. workplace-f3 955c776f-50b6-427f-907d-3524190bfd18 <cost> <status> workplace-f3 <sessionId> ``` File: /Users/notspencer/workplace/claude-dashboard/frontend/index.html I want to ad",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789955362647,
+      "endedAt": 1789956203103.9856,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/431ba261-5359-444a-befd-715b49166064.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 2.4378915000000005,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 2630548,
+        "main": {
+          "input": 72,
+          "output": 20705,
+          "cacheWrite": 64600,
+          "cacheRead": 2545171,
+          "total": 2630548
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 87861,
+        "limit": 1000000,
+        "percent": 8.8,
+        "at": 1789956098076
+      }
+    },
+    {
+      "sessionId": "e3a9a950-daca-4623-b0ac-f8d6abfa1c94",
+      "initialPrompt": "'/Users/notspencer/workplace/claude-dashboard/frontend/index.html' -- I recently added this feature on my frontend to render token count -> \"[1.3M tk]\". it's working great and it's gray text currently. I thought this was kind of odd and I didn't want",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957022896,
+      "endedAt": 1789957396189.3298,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/e3a9a950-daca-4623-b0ac-f8d6abfa1c94.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.3877885,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 234241,
+        "main": {
+          "input": 12,
+          "output": 3351,
+          "cacheWrite": 19681,
+          "cacheRead": 211197,
+          "total": 234241
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 43023,
+        "limit": 1000000,
+        "percent": 4.3,
+        "at": 1789957082128
+      }
+    },
+    {
+      "sessionId": "c8ff7cd1-b1c0-485f-a0b4-f7ab821ea19d",
+      "initialPrompt": "Feature: token window usage Frontend: Render this to the right of token count in the existing widget header: ``` $4.32 [3.2M tk] ... remaining $4.32 [3.2M tk] [40%, 100k / 200k] ... remaining ```` app.get('/fetch-single-session/:sessionId', (req, res",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957396094,
+      "endedAt": 1789957725958.6235,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/c8ff7cd1-b1c0-485f-a0b4-f7ab821ea19d.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 2.4342580000000003,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 2509031,
+        "main": {
+          "input": 54,
+          "output": 13331,
+          "cacheWrite": 89632,
+          "cacheRead": 2406014,
+          "total": 2509031
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 115028,
+        "limit": 1000000,
+        "percent": 11.5,
+        "at": 1789957627213
+      }
+    },
+    {
+      "sessionId": "a31a35dc-b02b-4500-a8f6-b1cee3acc508",
+      "initialPrompt": "Is there a way that I can calculate the real cost of a Claude Code session if I provide you the session ID? I don't want to calculate it locally. I'm wondering if there's a built-in Claude Code tool or if there's an API endpoint from Claude that I ca",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957551120,
+      "endedAt": 1789958615156.7512,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/a31a35dc-b02b-4500-a8f6-b1cee3acc508.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.1345312000000003,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 2768423,
+        "main": {
+          "input": 80,
+          "output": 29107,
+          "cacheWrite": 77455,
+          "cacheRead": 2661781,
+          "total": 2768423
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 102599,
+        "limit": 1000000,
+        "percent": 10.3,
+        "at": 1789958529894
+      }
+    },
+    {
+      "sessionId": "9dc38304-366f-4910-ad95-14b7c8f3276a",
+      "initialPrompt": "'/Users/notspencer/workplace/claude-dashboard/frontend/index.html' -- I recently added this feature on my frontend to render token count -> \"[1.3M tk]\". it's working great and it's gray text currently. I thought this was kind of odd and I didn't want",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957908284,
+      "endedAt": 1789957908544.7803,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/9dc38304-366f-4910-ad95-14b7c8f3276a.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.3877885,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 234241,
+        "main": {
+          "input": 12,
+          "output": 3351,
+          "cacheWrite": 19681,
+          "cacheRead": 211197,
+          "total": 234241
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 43023,
+        "limit": 1000000,
+        "percent": 4.3,
+        "at": 1789957082128
+      }
+    },
+    {
+      "sessionId": "fc334a42-428e-4332-8f43-de9e61ea25cb",
+      "initialPrompt": "Can you help me extend the header bar in these widgets: ``` $1.80 idle. workplace-f3 955c776f-50b6-427f-907d-3524190bfd18 <cost> <status> workplace-f3 <sessionId> ``` File: /Users/notspencer/workplace/claude-dashboard/frontend/index.html I want to ad",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957912787,
+      "endedAt": 1789957913014.188,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/fc334a42-428e-4332-8f43-de9e61ea25cb.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 2.4378915000000005,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 2630548,
+        "main": {
+          "input": 72,
+          "output": 20705,
+          "cacheWrite": 64600,
+          "cacheRead": 2545171,
+          "total": 2630548
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 87861,
+        "limit": 1000000,
+        "percent": 8.8,
+        "at": 1789956098076
+      }
+    },
+    {
+      "sessionId": "8ed49adf-b5a6-4d43-97c4-9a08512ec5b3",
+      "initialPrompt": "## Context ### Source Code /Users/notspencer/workplace/portfolio - react app, single page, static html /Users/notspencer/workplace/blog - docusaurus package with blog content, static html files, single-page javascript application ```bash # first buil",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957917073,
+      "endedAt": 1789957917287.202,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/8ed49adf-b5a6-4d43-97c4-9a08512ec5b3.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.7978015000000003,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1897291,
+        "main": {
+          "input": 66,
+          "output": 16274,
+          "cacheWrite": 47244,
+          "cacheRead": 1833707,
+          "total": 1897291
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 70183,
+        "limit": 1000000,
+        "percent": 7,
+        "at": 1789954876866
+      }
+    },
+    {
+      "sessionId": "758cf91a-4a3d-4e65-a936-97046974914e",
+      "initialPrompt": "Please amend the head commit and remove Claude from it. Amend this in place force lease and then force push to the remote branch.",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957921361,
+      "endedAt": 1789957921585.2063,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/758cf91a-4a3d-4e65-a936-97046974914e.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0837316,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 134574,
+        "main": {
+          "input": 8,
+          "output": 535,
+          "cacheWrite": 11063,
+          "cacheRead": 122968,
+          "total": 134574
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 33954,
+        "limit": 1000000,
+        "percent": 3.4,
+        "at": 1789953633726
+      }
+    },
+    {
+      "sessionId": "66f0318e-f537-4c37-a5f4-cf745c894820",
+      "initialPrompt": "help me write this file: '/Users/notspencer/workplace/localjev/binary-request.sh' - it will be used like binary-request.sh \"my text prompt\", and the JEV request should return `` questions: { answer: { \"yes or no\" } `` I want to create this single cur",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957925163,
+      "endedAt": 1789957925412.1433,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/66f0318e-f537-4c37-a5f4-cf745c894820.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.38975360000000003,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 624489,
+        "main": {
+          "input": 24,
+          "output": 10894,
+          "cacheWrite": 37246,
+          "cacheRead": 576325,
+          "total": 624489
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 60563,
+        "limit": 1000000,
+        "percent": 6.1,
+        "at": 1789950849947
+      }
+    },
+    {
+      "sessionId": "c1870d88-ec35-43f1-b7d0-d412b84379d9",
+      "initialPrompt": "File to edit: /Users/notspencer/workplace/sfx/.claude/settings.json I want to add a sound effect for this use-case: I want to fire this whenever the user changes the setting \"/model\" and selects Fable. is this possible without getting too hacky? Also",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957929666,
+      "endedAt": 1789957929917.9453,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/c1870d88-ec35-43f1-b7d0-d412b84379d9.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.403615,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1030860,
+        "main": {
+          "input": 40,
+          "output": 17553,
+          "cacheWrite": 67629,
+          "cacheRead": 945638,
+          "total": 1030860
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 57351,
+        "limit": 1000000,
+        "percent": 5.7,
+        "at": 1789950199226
+      }
+    },
+    {
+      "sessionId": "f3629d52-b7ab-444d-b625-25c4892eba76",
+      "initialPrompt": "~/.claude/settings.json & ~/.claude/sfx/* - can you remove the symlinks here? just keep it a real .json file. if needed, copy over the local copy duplicate int hat global folder",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957933496,
+      "endedAt": 1789957933732.3257,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/f3629d52-b7ab-444d-b625-25c4892eba76.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.415281,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 330745,
+        "main": {
+          "input": 16,
+          "output": 2858,
+          "cacheWrite": 18819,
+          "cacheRead": 309052,
+          "total": 330745
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 44678,
+        "limit": 1000000,
+        "percent": 4.5,
+        "at": 1789949949683
+      }
+    },
+    {
+      "sessionId": "4ffba219-696b-42c7-835f-c7946b92e474",
+      "initialPrompt": "File to edit: /Users/notspencer/workplace/sfx/.claude/settings.json I want to add a sound effect for this use-case: ``` - Split test out of the existing build matcher so pass/fail gets its own pair — build success and test success feel different ``` ",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957937559,
+      "endedAt": 1789957937798.2446,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/4ffba219-696b-42c7-835f-c7946b92e474.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.390734,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 909829,
+        "main": {
+          "input": 32,
+          "output": 22291,
+          "cacheWrite": 40864,
+          "cacheRead": 846642,
+          "total": 909829
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 67537,
+        "limit": 1000000,
+        "percent": 6.8,
+        "at": 1789949665615
+      }
+    },
+    {
+      "sessionId": "af5de40c-66dd-4e55-a36f-e476b5d21819",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/.claude/settings.json - I created this file that adds a bunch of sound effect hooks during my AI agents running, period. This is just humorous and additive. It's not actual functionality, period. I added a bunch of hoo",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957941646,
+      "endedAt": 1789957941877.085,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/af5de40c-66dd-4e55-a36f-e476b5d21819.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.5572444999999997,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 665884,
+        "main": {
+          "input": 22,
+          "output": 28307,
+          "cacheWrite": 55716,
+          "cacheRead": 581839,
+          "total": 665884
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 80661,
+        "limit": 1000000,
+        "percent": 8.1,
+        "at": 1789949634922
+      }
+    },
+    {
+      "sessionId": "c6160abc-851c-4385-bbd6-92988d7a68b6",
+      "initialPrompt": "'/Users/notspencer/workplace/sfx/.claude/settings.json' - add a hook. I want to add this sound effect to PreToolUse - /Users/notspencer/workplace/sfx/.claude/sfx/pwwwnd.mp3 It should match: `cr --update-revision` commands. Here's the usage patterns i",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957945507,
+      "endedAt": 1789957945750.377,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/c6160abc-851c-4385-bbd6-92988d7a68b6.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0676305,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 114288,
+        "main": {
+          "input": 25,
+          "output": 4535,
+          "cacheWrite": 17133,
+          "cacheRead": 92595,
+          "total": 114288
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-haiku-4-5-20251001",
+        "used": 40944,
+        "limit": 200000,
+        "percent": 20.5,
+        "at": 1789948456947
+      }
+    },
+    {
+      "sessionId": "b715551b-4c7a-43e7-a6ce-6aa6c9a037ad",
+      "initialPrompt": "File to update: /Users/notspencer/workplace/sfx/.claude/settings.json ## Template ``` \"PreToolUse\": [ { \"matcher\": \"Bash\", \"hooks\": [ { \"type\": \"command\", \"command\": \"grep -Eq '\\\"command\\\": *\\\"([^\\\"]*(&&|\\\\|\\\\||;|\\\\|) *)?git +commit' && command -v af",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957949944,
+      "endedAt": 1789957950166.2468,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/b715551b-4c7a-43e7-a6ce-6aa6c9a037ad.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 7.214390500000001,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 9167551,
+        "main": {
+          "input": 120,
+          "output": 37912,
+          "cacheWrite": 163829,
+          "cacheRead": 8965690,
+          "total": 9167551
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 188141,
+        "limit": 1000000,
+        "percent": 18.8,
+        "at": 1789948092025
+      }
+    },
+    {
+      "sessionId": "6fd1d78c-72e7-4463-bd15-b6ecb99be1e7",
+      "initialPrompt": "When do these get triggered? \"error\": [\"GladosMixedError1.mp3\", \"GladosMixedError2.mp3\"], - i need to know the matcher and hook triggere vent that it get's applied to in the .claude/settings.json file..",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957954297,
+      "endedAt": 1789957954518.2427,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/6fd1d78c-72e7-4463-bd15-b6ecb99be1e7.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0701943,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 270200,
+        "main": {
+          "input": 67,
+          "output": 2160,
+          "cacheWrite": 12265,
+          "cacheRead": 255708,
+          "total": 270200
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-haiku-4-5-20251001",
+        "used": 36758,
+        "limit": 200000,
+        "percent": 18.4,
+        "at": 1789947354682
+      }
+    },
+    {
+      "sessionId": "c3c75630-8d79-4e57-a1d2-b388d7c11d20",
+      "initialPrompt": "run npm install, just run it",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957958700,
+      "endedAt": 1789957958926.0657,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/c3c75630-8d79-4e57-a1d2-b388d7c11d20.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.0222585,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 32342,
+        "main": {
+          "input": 10,
+          "output": 122,
+          "cacheWrite": 9195,
+          "cacheRead": 23015,
+          "total": 32342
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-haiku-4-5-20251001",
+        "used": 32342,
+        "limit": 200000,
+        "percent": 16.2,
+        "at": 1789946384140
+      }
+    },
+    {
+      "sessionId": "ab96a7b3-a4e0-429b-aa11-270c75fe8648",
+      "initialPrompt": "can you make this file trimeed to 15 sec and slowly fade out - /Users/notspencer/workplace/sfx/.claude/sfx/tryna.mp3 ─────────────────────────────────────────────────────────────",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957963028,
+      "endedAt": 1789957963243.1782,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/ab96a7b3-a4e0-429b-aa11-270c75fe8648.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.405926,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 273491,
+        "main": {
+          "input": 14,
+          "output": 3003,
+          "cacheWrite": 20472,
+          "cacheRead": 250002,
+          "total": 273491
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 44327,
+        "limit": 1000000,
+        "percent": 4.4,
+        "at": 1789946353731
+      }
+    },
+    {
+      "sessionId": "3fd2a490-4174-4397-88bf-a9f816638026",
+      "initialPrompt": "can you please create a symlink? source: /Users/notspencer/workplace/sfx/.claude/sfx -> this entire folder. I want the symlink destination to be ~/.claude/sfx",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957971914,
+      "endedAt": 1789957972173.1611,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/3fd2a490-4174-4397-88bf-a9f816638026.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.9972701000000002,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1434289,
+        "main": {
+          "input": 56,
+          "output": 32837,
+          "cacheWrite": 61089,
+          "cacheRead": 1340307,
+          "total": 1434289
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 73667,
+        "limit": 1000000,
+        "percent": 7.4,
+        "at": 1789944489846
+      }
+    },
+    {
+      "sessionId": "010bc7c0-caa7-4a92-a616-518c488aa621",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/.claude/settings.json Please add this in PostToolUse: ```` { \"matcher\": \"Bash\", \"hooks\": [ { \"type\": \"command\", \"command\": \"grep -Eq '\\\"command\\\": *\\\"([^\\\"]*(&&|\\\\|\\\\||;|\\\\|) *)?git +commit' && command -v afplay > /dev",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957980575,
+      "endedAt": 1789957980800.696,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/010bc7c0-caa7-4a92-a616-518c488aa621.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.1028852,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 147802,
+        "main": {
+          "input": 8,
+          "output": 1116,
+          "cacheWrite": 13532,
+          "cacheRead": 133146,
+          "total": 147802
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 38337,
+        "limit": 1000000,
+        "percent": 3.8,
+        "at": 1789942163349
+      }
+    },
+    {
+      "sessionId": "49a876fe-d79b-44bf-a909-023dfdecf646",
+      "initialPrompt": "/Users/notspencer/workplace/portfolio/.github/workflows/vercel-deploy.yml This team has 2 projects using Node.js 20 or older. New builds will fail starting September 30, 2026. -> Upgrade to Node.js 24 --- I got this error when I tried to deploying to",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957984961,
+      "endedAt": 1789957985210.2546,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/49a876fe-d79b-44bf-a909-023dfdecf646.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.156204,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 306596,
+        "main": {
+          "input": 18,
+          "output": 2945,
+          "cacheWrite": 17058,
+          "cacheRead": 286575,
+          "total": 306596
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 39897,
+        "limit": 1000000,
+        "percent": 4,
+        "at": 1789941093614
+      }
+    },
+    {
+      "sessionId": "0c99b315-26ae-4247-a85c-8f3bb542a037",
+      "initialPrompt": "/Users/notspencer/workplace/sfx/.claude/settings.json --- Can you find the sound effects where I added a variation to the pitch thing? I want to add more variation and increase the randomness. Currently it was so subtle I couldn't even notice the dif",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957989359,
+      "endedAt": 1789957989572.2139,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/0c99b315-26ae-4247-a85c-8f3bb542a037.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.1716972,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 226874,
+        "main": {
+          "input": 12,
+          "output": 3593,
+          "cacheWrite": 18183,
+          "cacheRead": 205086,
+          "total": 226874
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-sonnet-5",
+        "used": 41473,
+        "limit": 1000000,
+        "percent": 4.1,
+        "at": 1789940697012
+      }
+    },
+    {
+      "sessionId": "85722308-b5e3-4148-bcd0-cff06dde9266",
+      "initialPrompt": "Upgrade prompt: github/workflows/github-pages-deploy.yml /Users/notspencer/workplace/blog/.github/workflows/github-pages-deploy.yml This team has 2 projects using Node.js 20 or older. New builds will fail starting September 30, 2026. -> Upgrade to No",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957993559,
+      "endedAt": 1789957993781.115,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/85722308-b5e3-4148-bcd0-cff06dde9266.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.7764685,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 770530,
+        "main": {
+          "input": 36,
+          "output": 5704,
+          "cacheWrite": 26331,
+          "cacheRead": 738459,
+          "total": 770530
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 49413,
+        "limit": 1000000,
+        "percent": 4.9,
+        "at": 1789940690432
+      }
+    },
+    {
+      "sessionId": "560fe691-2a73-48ac-ae0e-463e291ff113",
+      "initialPrompt": "How can I bypass this validation on vercel? I can't change the git email, I need to disable this in vercel portal ```The deployment was blocked because the commit email 60903378+username@users.noreply.github.com could not be matched to a GitHub accou",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789957997965,
+      "endedAt": 1789957998186.282,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/560fe691-2a73-48ac-ae0e-463e291ff113.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.3170774,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 150058,
+        "main": {
+          "input": 8,
+          "output": 3523,
+          "cacheWrite": 27632,
+          "cacheRead": 118895,
+          "total": 150058
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 38915,
+        "limit": 1000000,
+        "percent": 3.9,
+        "at": 1789940287593
+      }
+    },
+    {
+      "sessionId": "2d6f0e59-d0e0-4cd9-b99e-7909b8771399",
+      "initialPrompt": "I want to build a new tab for my app File: /Users/notspencer/workplace/claude-dashboard/frontend/index.html Tabs: Active, Completed, Activity (NEW) First, rename the url param globally on the frontend fro `status=active` to `tab=active`. Then we can ",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789958615057,
+      "endedAt": 1789959759075.1099,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/2d6f0e59-d0e0-4cd9-b99e-7909b8771399.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 1.70221,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 1416408,
+        "main": {
+          "input": 44,
+          "output": 18241,
+          "cacheWrite": 57433,
+          "cacheRead": 1340690,
+          "total": 1416408
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 80631,
+        "limit": 1000000,
+        "percent": 8.1,
+        "at": 1789959742078
+      }
+    },
+    {
+      "sessionId": "ee44bc70-11d5-49d7-b33d-4e6d3c7d7aa8",
+      "initialPrompt": "'/Users/notspencer/workplace/claude-dashboard/frontend/index.html' - '/Users/notspencer/workplace/claude-dashboard/frontend/styles.css' Can you make the \"Export JSON\" button something more blue? I to the styling, but it's just a plain white button ri",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789960685511,
+      "endedAt": 1789960772651.8066,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/ee44bc70-11d5-49d7-b33d-4e6d3c7d7aa8.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.323033,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 223384,
+        "main": {
+          "input": 12,
+          "output": 1776,
+          "cacheWrite": 17552,
+          "cacheRead": 204044,
+          "total": 223384
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 42155,
+        "limit": 1000000,
+        "percent": 4.2,
+        "at": 1789960765128
+      }
+    },
+    {
+      "sessionId": "a81f4467-3b6f-4ba6-ba94-4e651818e9a2",
+      "initialPrompt": "For the \"Completed\" tab, sometimes it takes >5 secs to load. Please add a loading spinner. re-use the existing little circle icons used on \"Active\" page, maybe just swap the text to be like: `(circle) Loading`",
+      "pid": null,
+      "name": null,
+      "cwd": "/Users/notspencer/workplace/claude-dashboard",
+      "startedAt": 1789960772553,
+      "endedAt": 1789960895056.135,
+      "status": "completed",
+      "reportedStatus": null,
+      "logPath": "/Users/notspencer/.claude/projects/-Users-notspencer-workplace-claude-dashboard/a81f4467-3b6f-4ba6-ba94-4e651818e9a2.jsonl",
+      "subagents": [],
+      "scheduledJobs": [],
+      "cost": {
+        "usd": 0.3859699999999999,
+        "unpricedModels": []
+      },
+      "tokens": {
+        "total": 281203,
+        "main": {
+          "input": 14,
+          "output": 2612,
+          "cacheWrite": 18977,
+          "cacheRead": 259600,
+          "total": 281203
+        },
+        "subagents": {}
+      },
+      "context": {
+        "model": "claude-opus-5",
+        "used": 43873,
+        "limit": 1000000,
+        "percent": 4.4,
+        "at": 1789960833359
+      }
+    }
+  ]
+}

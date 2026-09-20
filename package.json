@@ -1,0 +1,22 @@
+{
+  "name": "claude-session-visualizer",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "npm run launch:chrome && tsx server/index.ts",
+    "launch:chrome": "open -a 'Google Chrome' http://localhost:9000",
+    "dev": "tsx watch server/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,1364 @@
+/*
+ * Theme v4: "Clean light control room"
+ * Palette:
+ *   page      #ffffff   white background
+ *   card      #f3f5f8   light-grey session cards (border #e2e7ee)
+ *   ink       #0f2a4a   deep navy: structure, headers, session root node
+ *   text      #1c2733   body text          muted #6b7888
+ *   live      #1e9bd7   bright cyan-blue: running connectors, poll rings
+ *   line      #c3cedb   tree connectors
+ *   semantic  green #1f9d55 / yellow #b08800 / orange #e08a00 / red #d64545 / dim #a7b1bd (status dots, cost)
+ */
+
+:root {
+  --bg: #ffffff;
+  --card: #f3f5f8;
+  --card-border: #e2e7ee;
+  --panel: #ffffff;
+  --ink: #0f2a4a;
+  --text: #1c2733;
+  --muted: #6b7888;
+  --live: #1e9bd7;
+  --live-soft: #e2f2fb;
+  --line: #c3cedb;
+  --green: #1f9d55;
+  --yellow: #b08800; /* darkened gold: pure yellow is unreadable on the light cards */
+  --orange: #e08a00;
+  --red: #d64545;
+  --dim: #a7b1bd;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gap-x: 18px; /* connector stub length; parent-to-child distance is 2x this */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 1.75rem 2rem 3rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---------- Page header ---------- */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+/* Tabs sit on the header's bottom rule; the current one is tinted with the cyan accent */
+.tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px 8px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tab:hover {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.tab.active {
+  background: var(--live-soft);
+  color: var(--ink);
+  cursor: default;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.9em;
+}
+
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Empty (Updated text is commented out), so it doesn't add a flex gap before the poll ring */
+#updated:empty {
+  display: none;
+}
+
+#empty {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+#empty:empty {
+  display: none;
+}
+
+/* ---------- Activity tab (see activity.js) ---------- */
+
+/* Graph panel on the left, year list on the right */
+#activity {
+  --cell: 11px;
+  --cell-gap: 3px;
+  --level-0: #ebedf0;
+  --level-1: #9be9a8;
+  --level-2: #40c463;
+  --level-3: #30a14e;
+  --level-4: #216e39;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+#activity[hidden] {
+  display: none;
+}
+
+.activity-panel {
+  flex: 1;
+  min-width: 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  transition: opacity 0.15s;
+}
+
+.activity-panel.loading {
+  opacity: 0.5;
+}
+
+/* Wide years scroll sideways instead of squeezing the squares */
+.activity-graph {
+  display: grid;
+  grid-template-rows: auto repeat(7, var(--cell));
+  gap: var(--cell-gap);
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.activity-graph .month {
+  grid-row: 1;
+  white-space: nowrap;
+  overflow: visible;
+  width: 0; /* don't widen the column it sits in */
+}
+
+.activity-graph .weekday {
+  padding-right: 0.5rem;
+  line-height: var(--cell);
+}
+
+#activity .day {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 2px;
+  outline: 1px solid rgb(27 31 36 / 6%);
+  outline-offset: -1px;
+  background: var(--level-0);
+}
+
+#activity .day[data-level="1"] { background: var(--level-1); }
+#activity .day[data-level="2"] { background: var(--level-2); }
+#activity .day[data-level="3"] { background: var(--level-3); }
+#activity .day[data-level="4"] { background: var(--level-4); }
+
+.activity-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.activity-summary {
+  margin: 0;
+}
+
+.activity-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--cell-gap);
+}
+
+.activity-legend span:first-child {
+  margin-right: 0.25rem;
+}
+
+.activity-legend span:last-child {
+  margin-left: 0.25rem;
+}
+
+.activity-years {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 7rem;
+}
+
+.year-btn {
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+  font: 600 0.9rem system-ui, sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.year-btn:hover {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.year-btn.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.year-btn:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: 2px;
+}
+
+@media (max-width: 700px) {
+  #activity {
+    flex-direction: column-reverse;
+  }
+
+  .activity-years {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+  }
+}
+
+/* ---------- Time-range picker (Completed tab, see range-picker.js) ---------- */
+
+/* Totals on the left; Export JSON and the picker on the right */
+.range-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.range-totals {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: auto;
+  font-size: 0.85rem;
+}
+
+.total-label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.total-label:not(:first-child) {
+  margin-left: 0.6rem;
+}
+
+.total-cost,
+.total-tokens {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.total-cost {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.total-tokens {
+  color: var(--text);
+}
+
+.range-totals.pending .total-cost,
+.range-totals.pending .total-tokens {
+  color: var(--muted);
+  font-weight: 400;
+  opacity: 0.45;
+}
+
+/* Completed tab sort: [↓ | ↑] order toggle + sort-by dropdown, right after the token total */
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: 0.6rem;
+}
+
+.sort-order {
+  display: flex;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sort-order button {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.4rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.sort-order button + button {
+  border-left: 1px solid var(--card-border);
+}
+
+.sort-order button:hover {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.sort-order button[aria-pressed='true'] {
+  background: var(--live-soft);
+  color: var(--ink);
+}
+
+.sort-order svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sort-by {
+  padding: 0.15rem 0.3rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 600 0.8rem system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.sort-by:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: -2px;
+}
+
+.range-bar .export-btn {
+  padding: 0.35rem 0.8rem;
+  border-color: #0f6594;
+  background: linear-gradient(to bottom, #2f9cd4, #1784bd 55%, #126fa3);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.18);
+  /* top-edge highlight + soft drop shadow */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 1px 2px rgba(15, 42, 74, 0.2);
+}
+
+.range-bar .export-btn:hover:not(:disabled) {
+  background: linear-gradient(to bottom, #3aa8de, #1e8fc9 55%, #1579b0);
+}
+
+.range-bar .export-btn:active:not(:disabled) {
+  background: linear-gradient(to bottom, #126fa3, #1784bd);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.range-bar .export-btn:focus-visible {
+  outline-offset: 2px; /* the shared -2px inset would vanish against the blue fill */
+}
+
+.range-bar[hidden],
+.range-picker [hidden] {
+  display: none;
+}
+
+.range-picker {
+  position: relative; /* anchors the dropdown panel */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.range-bar button:focus-visible,
+.rp-mode:has(input:focus-visible) {
+  outline: 2px solid var(--live);
+  outline-offset: -2px;
+}
+
+/* Segmented bar: presets | Custom */
+.rp-bar {
+  display: flex;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rp-bar button {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 600 0.85rem system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.rp-bar button:hover {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.rp-bar button.active {
+  background: var(--live-soft);
+  color: var(--ink);
+}
+
+.rp-bar .rp-custom {
+  border-left: 1px solid var(--card-border);
+}
+
+.rp-custom svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+/* Dropdown panel, right-aligned under the bar */
+.rp-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 10;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(15, 42, 74, 0.12);
+  font-size: 0.85rem;
+}
+
+/* Mode radios, styled as underline tabs */
+.rp-modes {
+  display: flex;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.rp-mode {
+  position: relative;
+  margin-bottom: -1px;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rp-mode input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rp-mode:hover {
+  color: var(--ink);
+}
+
+.rp-mode:has(input:checked) {
+  color: var(--ink);
+  border-bottom-color: var(--live);
+}
+
+.rp-body {
+  padding: 1rem;
+}
+
+.rp-input {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.rp-input:focus {
+  outline: 2px solid var(--live-soft);
+  border-color: var(--live);
+}
+
+/* Relative: unit rows of quick picks, then free entry */
+.rp-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.rp-row-label {
+  width: 4.5rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.rp-chips {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.rp-chip {
+  min-width: 2.5rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.rp-chip:hover {
+  background: var(--card);
+}
+
+.rp-chip.active {
+  border-color: var(--live);
+  background: var(--live-soft);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.rp-free {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.rp-free input {
+  width: 6rem;
+  text-align: right;
+}
+
+.rp-free select {
+  flex: 1;
+}
+
+/* Absolute: two month grids, then date/time fields */
+.rp-months {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.rp-month-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.rp-month-title {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.rp-nav,
+.rp-nav-spacer {
+  width: 28px;
+  height: 28px;
+}
+
+.rp-nav {
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--ink);
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.rp-nav:hover:not(:disabled) {
+  background: var(--card);
+}
+
+.rp-nav:disabled {
+  color: var(--dim);
+  cursor: default;
+}
+
+.rp-days {
+  display: grid;
+  grid-template-columns: repeat(7, 34px);
+  row-gap: 2px; /* no column gap, so the in-range band is continuous */
+}
+
+.rp-dow {
+  padding: 0.2rem 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.rp-day {
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.rp-day:hover:not(:disabled) {
+  background: var(--card);
+}
+
+.rp-day:disabled {
+  color: var(--dim);
+  cursor: default;
+}
+
+.rp-day.today {
+  border-color: var(--line);
+}
+
+.rp-day.in-range {
+  border-radius: 0;
+  background: var(--live-soft);
+}
+
+.rp-day.selected {
+  background: var(--live);
+  color: #fff;
+  font-weight: 600;
+}
+
+.rp-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.rp-field-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.rp-field-inputs {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.rp-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--card-border);
+  border-radius: 0 0 10px 10px;
+  background: var(--card);
+}
+
+.rp-hint {
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.rp-btn {
+  padding: 0.4rem 0.95rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 600 0.82rem system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.rp-btn:hover {
+  background: #e9edf2;
+}
+
+.rp-btn.primary {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.rp-btn.primary:hover {
+  background: #1a3a60;
+}
+
+.rp-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------- Session card ---------- */
+
+.session {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+/* TOP: left-to-right tree, pinned left; deep nesting overflows into a horizontal scroll */
+.viz {
+  overflow-x: auto;
+  padding: 16px 16px 16px;
+  background-color: var(--panel);
+  background-image: radial-gradient(#e6ebf1 1px, transparent 1px);
+  background-size: 16px 16px;
+  transition: opacity 300ms ease;
+}
+
+/* Holds the chart plus its Hide/Show buttons; height animates between the two states */
+.viz-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--panel);
+  border-bottom: 1px solid var(--card-border);
+  transition: height 500ms ease;
+}
+
+.viz-wrap.collapsed {
+  height: 48px;
+}
+
+.viz-wrap.collapsed .viz {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.viz-btn {
+  position: absolute;
+  z-index: 1;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--muted);
+  font: 600 0.72rem system-ui, sans-serif;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.viz-btn:hover {
+  background: #f3f5f8;
+  color: var(--ink);
+}
+
+.viz-btn:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: 1px;
+}
+
+.viz-minimize,
+.viz-expand {
+  top: 8px;
+  right: 8px;
+}
+
+/* Only the button for the current state is visible and clickable */
+.viz-wrap.collapsed .viz-minimize,
+.viz-wrap:not(.collapsed) .viz-expand {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.tree {
+  position: relative; /* offset parent for node positions and the .wires overlay */
+  width: max-content;
+  display: flex;
+}
+
+/* Running edges: continuous dashed path drawn over the grey CSS connectors (see drawWires) */
+.wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.wires path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.wires .wire-halo {
+  stroke: var(--live-soft);
+  stroke-width: 6;
+}
+
+.wires .wire {
+  stroke: var(--live);
+  stroke-dasharray: 4 4;
+  animation: wire-flow 600ms linear infinite;
+}
+
+/* Each level is a row: node on the left, its children stacked in a column to the right */
+.branch,
+.tree li {
+  display: flex;
+  align-items: center;
+}
+
+.tree ul.kids {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0 0 0 var(--gap-x);
+  position: relative;
+  list-style: none;
+}
+
+.tree ul.kids:empty {
+  display: none;
+}
+
+/* Horizontal stub from the parent node to the vertical bus */
+.tree ul.kids::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(50% - 1px);
+  width: var(--gap-x);
+  height: 2px;
+  background: var(--line);
+}
+
+.tree li {
+  position: relative;
+  padding: 4px 0 4px var(--gap-x);
+}
+
+/* Vertical bus: each child draws the upper and lower half beside itself */
+.tree li::before,
+.tree li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 50%;
+  border-left: 2px solid var(--line);
+}
+
+.tree li::before {
+  top: 0;
+}
+
+.tree li::after {
+  bottom: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after,
+.tree li:only-child::before,
+.tree li:only-child::after {
+  display: none;
+}
+
+/* ---------- Nodes ---------- */
+
+.node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 12px 5px 10px;
+  background: #fff;
+  border: 1px solid #d3dbe5;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(15, 42, 74, 0.06);
+  white-space: nowrap;
+  animation: node-in 300ms ease-out;
+}
+
+/* Horizontal stem from the bus into each child node */
+.tree li > .node::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--gap-x) - 1px);
+  top: calc(50% - 1px);
+  width: calc(var(--gap-x) + 1px);
+  height: 2px;
+  background: var(--line);
+}
+
+/* Running: cyan border (its edge is drawn by the .wires overlay) */
+.tree li.s-running > .node {
+  border-color: var(--live);
+  box-shadow: 0 0 0 3px var(--live-soft);
+}
+
+.tree li.s-completed > .node,
+.tree li.s-interrupted > .node {
+  color: var(--muted);
+}
+
+.tree li.s-failed > .node,
+.tree li.s-killed > .node {
+  border-color: #efc3c3;
+}
+
+.node-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.node-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  max-width: 24ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-sub {
+  font-size: 0.68rem;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+/* Session root node: solid navy */
+.node.root {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 16px 8px 12px;
+  box-shadow: 0 2px 6px rgba(15, 42, 74, 0.25);
+}
+
+.node.root .node-title {
+  font-size: 0.95rem;
+  max-width: 36ch;
+}
+
+.node.root .node-sub {
+  color: #9fb4cc;
+}
+
+/* ---------- Status icons ----------
+ * The robot SVG is used as a mask, so the element's background color becomes the icon's fill.
+ * Status rules below only need to set `background`. */
+
+.dot {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background: var(--dim);
+  -webkit-mask: url("robot-icon.svg") center / contain no-repeat;
+  mask: url("robot-icon.svg") center / contain no-repeat;
+}
+
+.dot[data-s="working"],
+.dot[data-s="running"] {
+  background: var(--green);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.dot[data-s="permission"],
+.dot[data-s="question"] {
+  background: var(--orange);
+}
+
+.dot[data-s="failed"],
+.dot[data-s="killed"] {
+  background: var(--red);
+}
+
+.node.root .dot {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Metadata line (top of card) ---------- */
+
+.session-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+  padding: 0.65rem 1.1rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+/* ---------- Collapsible text details (below chart) ---------- */
+
+.details {
+  padding: 0.75rem 1.1rem 0.9rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.details > .subagents > .subagent:first-child {
+  margin-top: 0;
+}
+
+/* Raw session JSON at the bottom of the details: full height, long lines wrap, Copy pinned bottom-right */
+.json-block {
+  position: relative;
+  margin-top: 0.9rem;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #e0e0e0;
+}
+
+.json-body {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font: 0.75rem/1.5 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.json-copy {
+  position: absolute;
+  right: 0.6rem;
+  top: 0.45rem;
+  padding: 0.2rem 0.8rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink);
+  font: 600 0.75rem system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.json-copy:hover {
+  background: #e9edf2;
+}
+
+.json-copy:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: 1px;
+}
+
+/* Full-width expand bar, label + chevron right-aligned */
+.expand-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.45rem 1.1rem;
+  border: 0;
+  background: #e9edf2;
+  color: var(--muted);
+  font: 600 0.75rem system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.expand-toggle:hover {
+  background: #dfe5ec;
+  color: var(--ink);
+}
+
+.expand-toggle:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: -2px;
+}
+
+.chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 150ms ease;
+}
+
+.expand-toggle[aria-expanded="true"] .chevron {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+/* Cost and tokens arrive one poll after the card mounts, so both reserve their settled width (the
+   header is monospace, so 1ch = one character) and show a dimmed placeholder until then. */
+.session-header .cost {
+  color: var(--red);
+  font-weight: 700;
+  min-width: 5ch;
+}
+
+.session-header .tokens {
+  color: var(--muted);
+  min-width: 9ch;
+}
+
+/* Token total tiers; thresholds live in TOKEN_TIERS in index.html */
+.session-header .tokens[data-tier="low"] { color: var(--green); }
+.session-header .tokens[data-tier="medium"] { color: var(--yellow); }
+.session-header .tokens[data-tier="high"] { color: var(--orange); }
+.session-header .tokens[data-tier="very-high"] { color: var(--red); }
+
+/* Beyond the typical range entirely: bold red on a red tint so it stands out for triage */
+.session-header .tokens[data-tier="triage"] {
+  color: var(--red);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  border-radius: 4px;
+  padding: 0 0.25em;
+}
+
+.session-header .context {
+  color: var(--muted);
+}
+
+/* Context-window fill; thresholds live in CONTEXT_LEVELS in index.html */
+.session-header .context[data-level="warn"] { color: var(--orange); }
+.session-header .context[data-level="full"] { color: var(--red); font-weight: 700; }
+
+.session-header .pending {
+  color: var(--muted);
+  font-weight: 400;
+  opacity: 0.45;
+}
+
+.session-header .sid {
+  color: var(--muted);
+}
+
+.session-header .sstatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--muted);
+}
+
+.session-header .sname {
+  color: var(--ink);
+  font-weight: 600;
+  font-family: system-ui, sans-serif;
+}
+
+.session-header .poll-ring {
+  margin-left: auto;
+}
+
+.subagent {
+  margin: 0.3rem 0 0 1.1rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid #d6dde6;
+}
+
+.subagent.status-running {
+  border-left-color: var(--live);
+}
+
+.subagent > .sa-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.subagent:not(.status-running) > .sa-label {
+  color: var(--muted);
+}
+
+.sa-status {
+  font-family: var(--mono);
+  font-size: 0.75em;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scheduled {
+  margin: 0.7rem 0 0 1.1rem;
+  color: var(--muted);
+}
+
+.scheduled:empty {
+  display: none;
+}
+
+.scheduled > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.job-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: #e3e9f1;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.job-name {
+  display: inline-block;
+  max-width: 44ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+  color: var(--text);
+}
+
+.job-when {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  color: var(--live);
+}
+
+/* Unmount: fade out, then JS removes the element (FADE_OUT_MS in index.html) */
+.leaving {
+  animation: fade-out 200ms ease-out forwards;
+  pointer-events: none;
+}
+
+/* ---------- Countdown ring ---------- */
+
+.poll-ring {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  transform: rotate(-90deg);
+}
+
+.poll-ring circle {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.poll-ring .track {
+  stroke: var(--live-soft);
+}
+
+.poll-ring .progress {
+  stroke: var(--live);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  animation: poll-drain var(--poll-ms) linear forwards;
+}
+
+/* The same ring as a spinner (Completed tab's initial load): a fixed arc rotating on the track */
+.poll-ring.spinning {
+  animation: spin 0.9s linear infinite;
+}
+
+.poll-ring.spinning .progress {
+  stroke-dasharray: 30 70;
+  animation: none;
+}
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ---------- Demo badge (demo mode only) ---------- */
+
+/* Sits inside the active tab, so it inherits that tab's white-on-navy */
+.demo-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes poll-drain {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 100; }
+}
+
+@keyframes spin {
+  from { transform: rotate(-90deg); }
+  to { transform: rotate(270deg); }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes node-in {
+  from { opacity: 0; transform: translateX(-4px); }
+}
+
+/* Dashes travel from parent toward child */
+@keyframes wire-flow {
+  to { stroke-dashoffset: -8; }
+}
+
+/* Box-shadow would be clipped by the icon mask, so running icons pulse in opacity instead */
+@keyframes pulse {
+  50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .poll-ring.spinning,
+  .node,
+  .wires .wire {
+    animation: none;
+  }
+
+  .viz-wrap {
+    transition: none;
+  }
+}

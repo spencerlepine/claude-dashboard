@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agents Dashboard 👾</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="page-header">
+    <nav class="tabs">
+      <a class="tab active" data-tab="active" href="?tab=active" aria-current="page">Active</a>
+      <a class="tab" data-tab="completed" href="?tab=completed">Completed</a>
+      <a class="tab" data-tab="activity" href="?tab=activity">Activity</a>
+    </nav>
+    <p class="muted status-line"><span id="updated"></span></p>
+  </header>
+  <div class="range-bar" id="range-bar" hidden></div>
+
+  <!-- Page mode from the URL: ?tab=active (the default, live + polling) | completed (one-time load of a
+       time range) | activity (sessions-per-day graph for a year). Runs before the demo script so its badge
+       lands on the right tab. -->
+  <script>
+    const params = new URLSearchParams(location.search);
+    const TAB = ['completed', 'activity'].includes(params.get('tab')) ? params.get('tab') : 'active';
+
+    // Completed tab's time range (see server/range.ts, set by range-picker.js). Defaults to the last week,
+    // written into the URL so a reload keeps it.
+    const RANGE_KEYS = ['timeRange', 'period', 'unit', 'startDate', 'endDate'];
+    // Completed tab's card order: ?sortBy=date|cost|tokens & sortOrder=asc|desc, defaulting to date, asc
+    const SORT_BYS = ['date', 'cost', 'tokens'];
+    const SORT_ORDERS = ['asc', 'desc'];
+    if (TAB === 'completed') {
+      if (!params.has('timeRange')) {
+        params.set('timeRange', 'relative');
+        params.set('period', '1');
+        params.set('unit', 'days');
+      }
+      if (!SORT_BYS.includes(params.get('sortBy'))) params.set('sortBy', 'date');
+      if (!SORT_ORDERS.includes(params.get('sortOrder'))) params.set('sortOrder', 'asc');
+      history.replaceState(null, '', `?${params}`);
+    }
+    const SORT_BY = params.get('sortBy');
+    const SORT_ORDER = params.get('sortOrder');
+
+    // Switching tabs drops the range and year but keeps ?demo
+    for (const tab of document.querySelectorAll('.tab')) {
+      const current = tab.dataset.tab === TAB;
+      tab.classList.toggle('active', current);
+      if (current) tab.setAttribute('aria-current', 'page');
+      else tab.removeAttribute('aria-current');
+      const q = new URLSearchParams({ tab: tab.dataset.tab });
+      if (params.has('demo')) q.set('demo', params.get('demo'));
+      tab.href = `?${q}`;
+    }
+  </script>
+  <div id="sessions"></div>
+  <div id="activity" hidden></div>
+  <p class="muted" id="empty">Loading…</p>
+
+  <!-- ===================== DEMO MODE (delete the script block below, up to END DEMO MODE, to remove) =====================
+       Active only when the URL contains ?demo. Replaces fetch() for the dashboard endpoints with
+       generated mock data on a 60s loop: 3 sessions, nested subagents 3 levels deep, scheduled jobs,
+       statuses that change over time, and one session that closes and reopens. -->
+  <script>
+    (() => {
+      if (!new URLSearchParams(location.search).has('demo')) return;
+
+      const t0 = Date.now();
+      const PERIOD = 60; // seconds; the scripted timeline loops
+      const cyc = () => ((Date.now() - t0) / 1000) % PERIOD;
+      const elapsed = () => (Date.now() - t0) / 1000;
+
+      // schedule: [[secondIntoCycle, status], ...] sorted ascending
+      const at = (schedule, t) => {
+        let s = schedule[0][1];
+        for (const [sec, st] of schedule) if (t >= sec) s = st;
+        return s;
+      };
+
+      // Compact subagent spec: [id, type, description, appearAt, schedule, children]
+      const A = (id, type, desc, appear, schedule, children = []) => ({ id, type, desc, appear, schedule, children });
+
+      const sessions = [
+        {
+          sessionId: '3f9a1c2e-7b44-4d1a-9c55-0e8f2a6b1d73', pid: 41021, name: 'refactor-auth',
+          prompt: 'Refactor the auth module to use short-lived access tokens with a refresh flow, and add tests',
+          cwd: '/Users/demo/workplace/api', costBase: 0.84, costRate: 0.006, unpriced: [],
+          tokenBase: 618_000, tokenRate: 4500, ctx: { model: 'claude-haiku-4-5-20251001', limit: 200_000, base: 62_000, rate: 1100 },
+          schedule: [[0, 'working'], [24, 'permission'], [31, 'working'], [52, 'idle']],
+          present: () => true,
+          agents: [
+            A('a1', 'Explore', 'Map auth module call sites', 0, [[0, 'running'], [15, 'completed']], [
+              A('a1-1', 'general-purpose', 'Scan middleware', 2, [[0, 'running'], [9, 'completed']]),
+              A('a1-2', 'general-purpose', 'Scan route handlers', 3, [[0, 'running'], [12, 'completed']]),
+            ]),
+            A('a2', 'Plan', 'Design token refresh flow', 6, [[0, 'running'], [32, 'completed']], [
+              A('a2-1', 'general-purpose', 'Review OAuth spec', 9, [[0, 'running'], [22, 'completed']], [
+                A('a2-1-1', 'Explore', 'Fetch RFC 6749 sections', 11, [[0, 'running'], [18, 'completed']]),
+                A('a2-1-2', 'Explore', 'Compare PKCE libraries', 12, [[0, 'running'], [20, 'failed']]),
+              ]),
+              A('a2-2', 'general-purpose', 'Draft migration plan', 16, [[0, 'running'], [30, 'completed']]),
+            ]),
+            A('a3', 'general-purpose', 'Write unit tests for refresh', 34, [[0, 'running'], [55, 'completed']]),
+          ],
+          jobs: [
+            { id: 'j-7c1e', cron: '*/10 * * * *', humanSchedule: 'every 10 minutes', prompt: 'Check PR review comments and reply', recurring: true, every: 10 },
+            { id: 'j-02aa', cron: '0 2 * * *', humanSchedule: 'daily at 2:00 AM', prompt: 'Run nightly regression suite and post summary', recurring: true, every: 60 * 9 },
+          ],
+        },
+        {
+          sessionId: 'b72d0e91-5a3c-4f88-8d21-6c4e9f0a2b15', pid: 41877, name: 'docs-site translations',
+          prompt: 'Translate the docs site into Japanese, starting with Getting started and the API reference',
+          cwd: '/Users/demo/workplace/docs', costBase: 3.47, costRate: 0.009, unpriced: ['claude-experimental-x'],
+          tokenBase: 2_410_000, tokenRate: 9000, ctx: { model: 'claude-opus-5', limit: 1_000_000, base: 640_000, rate: 3500 },
+          schedule: [[0, 'question'], [14, 'working'], [44, 'idle']],
+          present: () => true,
+          agents: [
+            A('b1', 'general-purpose', 'Translate: Getting started', 0, [[0, 'completed']]),
+            A('b2', 'general-purpose', 'Translate: API reference', 0, [[0, 'running'], [28, 'completed']]),
+            A('b3', 'Plan', 'Translate: Tutorials', 0, [[0, 'running'], [40, 'completed']], [
+              A('b3-1', 'general-purpose', 'Tutorial 1: Hello world', 4, [[0, 'running'], [20, 'completed']], [
+                A('b3-1-1', 'Explore', 'Check code samples compile', 8, [[0, 'running'], [17, 'completed']]),
+              ]),
+              A('b3-2', 'general-purpose', 'Tutorial 2: Deploying', 10, [[0, 'running'], [26, 'interrupted'], [27, 'running'], [38, 'completed']]),
+            ]),
+            A('b4', 'general-purpose', 'Translate: FAQ', 0, [[0, 'running'], [18, 'killed']]),
+            A('b5', 'general-purpose', 'Translate: Changelog', 5, [[0, 'running'], [33, 'completed']]),
+            A('b6', 'general-purpose', 'Translate: Glossary', 12, [[0, 'running'], [45, 'completed']]),
+            A('b7', 'Explore', 'Lint all translated pages', 42, [[0, 'running'], [58, 'completed']]),
+          ],
+          jobs: [
+            { id: 'j-9f30', cron: '30 * * * *', humanSchedule: null, prompt: 'Sync glossary from upstream', recurring: true, every: 45 },
+          ],
+        },
+        {
+          sessionId: 'e04c6b3d-2f19-4a70-b6e2-91d7c5a83f40', pid: 42310, name: null,
+          prompt: 'What does this regex match? /^(?:[a-z0-9-]+\\.)+[a-z]{2,}$/',
+          cwd: '/Users/demo/scratch', costBase: 0.12, costRate: 0.002, unpriced: [],
+          tokenBase: 180, tokenRate: 3, // stays under 1k for a while, so all three formats show at once
+          ctx: { model: 'claude-sonnet-5', limit: 1_000_000, base: 21_000, rate: 40 },
+          schedule: [[0, 'working'], [18, 'permission'], [30, 'working']],
+          present: () => cyc() < 45, // closes at 45s, reopens next loop
+          agents: [],
+          jobs: [],
+        },
+      ];
+
+      const startedAt = t0 - 25 * 60000;
+
+      function buildAgents(specs, t) {
+        return specs.filter((a) => t >= a.appear).map((a) => ({
+          agentId: `agent-${a.id}`,
+          agentType: a.type,
+          description: a.desc,
+          initialPrompt: `${a.desc}. Report back with what you find.`,
+          status: at(a.schedule, t - a.appear),
+          startedAt: t0 + a.appear * 1000,
+          lastActivityAt: Date.now(),
+          children: buildAgents(a.children, t),
+        }));
+      }
+
+      function base(s, t) {
+        const status = at(s.schedule, t);
+        return {
+          sessionId: s.sessionId, pid: s.pid, name: s.name, cwd: s.cwd, startedAt,
+          status, reportedStatus: status, logPath: `/Users/demo/.claude/projects/${s.sessionId}.jsonl`,
+        };
+      }
+
+      // Same shape as the server's SessionTokens: 40% of the total on the main transcript, the rest
+      // split evenly over however many sub-agents are alive right now.
+      function buildTokens(s, agents) {
+        const total = Math.round(s.tokenBase + elapsed() * s.tokenRate);
+        const counts = (n) => ({ input: n, output: 0, cacheWrite: 0, cacheRead: 0, total: n });
+        const flat = [];
+        const walk = (list) => list.forEach((a) => (flat.push(a), walk(a.children)));
+        walk(agents);
+        const each = flat.length ? Math.floor((total * 0.6) / flat.length) : 0;
+        const subagents = {};
+        for (const a of flat) subagents[a.agentId] = counts(each);
+        return { total, main: counts(total - each * flat.length), subagents };
+      }
+
+      // Same shape as the server's ContextWindow; grows with the clock, capped just under the limit.
+      function buildContext(s) {
+        const used = Math.min(Math.round(s.ctx.base + elapsed() * s.ctx.rate), s.ctx.limit - 1000);
+        return { model: s.ctx.model, used, limit: s.ctx.limit, percent: Math.round((used / s.ctx.limit) * 1000) / 10, at: Date.now() };
+      }
+
+      function detail(id) {
+        const s = sessions.find((x) => x.sessionId === id);
+        if (!s || !s.present()) return { sessionId: id, status: 'closed' };
+        const t = cyc();
+        const now = Date.now();
+        const subagents = buildAgents(s.agents, t);
+        return {
+          sessionId: s.sessionId, initialPrompt: s.prompt, // same key order as the server
+          ...base(s, t),
+          subagents,
+          scheduledJobs: s.jobs.map((j) => ({
+            id: j.id, cron: j.cron, humanSchedule: j.humanSchedule, prompt: j.prompt, recurring: j.recurring,
+            createdAt: t0,
+            nextRunAt: t0 + Math.ceil((now - t0 + 1) / (j.every * 60000)) * j.every * 60000,
+          })),
+          cost: { usd: s.costBase + elapsed() * s.costRate, unpricedModels: s.unpriced },
+          tokens: buildTokens(s, subagents),
+          context: buildContext(s),
+        };
+      }
+
+      function list() {
+        const t = cyc();
+        const live = sessions.filter((s) => s.present());
+        return { fetchedAt: Date.now(), status: 'active', sessionIds: live.map((s) => s.sessionId), sessions: live.map((s) => base(s, t)) };
+      }
+
+      // Completed tab: every session frozen at the end of its timeline, like the server's view of an exited
+      // process: all agents shown, any still running count as interrupted, no scheduled jobs.
+      const completedBase = (s) => ({ ...base(s, PERIOD), pid: null, endedAt: t0, status: 'completed', reportedStatus: null });
+      const freeze = (agents) => agents.map((a) =>
+        ({ ...a, status: a.status === 'running' ? 'interrupted' : a.status, children: freeze(a.children) }));
+
+      // Echoes the requested range (months/years approximated) so the picker shows what was asked for
+      const UNIT_MS = { hour: 36e5, day: 864e5, week: 6048e5, month: 30 * 864e5, year: 365 * 864e5 };
+      function completedList(q) {
+        const now = Date.now();
+        const range = q.get('timeRange') === 'absolute'
+          ? { from: Date.parse(q.get('startDate')), to: Date.parse(q.get('endDate')) }
+          : { from: now - q.get('period') * UNIT_MS[q.get('unit')?.replace(/s$/, '')], to: now };
+        return {
+          fetchedAt: now, status: 'completed', range,
+          sessionIds: sessions.map((s) => s.sessionId), sessions: sessions.map(completedBase),
+        };
+      }
+
+      function completedDetail(id) {
+        const s = sessions.find((x) => x.sessionId === id);
+        const subagents = freeze(buildAgents(s.agents, PERIOD));
+        return {
+          sessionId: s.sessionId, initialPrompt: s.prompt,
+          ...completedBase(s), subagents, scheduledJobs: [],
+          cost: { usd: s.costBase, unpricedModels: s.unpriced }, tokens: buildTokens(s, subagents),
+          context: buildContext(s),
+        };
+      }
+
+      // Activity tab: sessions per UTC day, seeded by year so switching back and forth is stable. Weekdays
+      // are busier, busy and quiet stretches come in runs, older years are sparser, and nothing after today.
+      function activity(q) {
+        const year = Number(q.get('year')) || new Date().getUTCFullYear();
+        let seed = year * 2654435761 >>> 0;
+        const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32);
+        const busy = Math.max(0.15, 1 - (new Date().getUTCFullYear() - year) * 0.2);
+        const days = {};
+        let mood = 0.5;
+        for (let t = Date.UTC(year, 0, 1); t < Date.UTC(year + 1, 0, 1) && t <= Date.now(); t += 864e5) {
+          mood = Math.min(1, Math.max(0, mood + (rand() - 0.5) * 0.3));
+          const dow = new Date(t).getUTCDay();
+          const odds = busy * mood * (dow === 0 || dow === 6 ? 0.35 : 1);
+          if (rand() < odds) days[new Date(t).toISOString().slice(0, 10)] = 1 + Math.floor(rand() ** 2 * 12 * mood);
+        }
+        return { year, days };
+      }
+
+      const json = (obj) => new Response(JSON.stringify(obj), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      const realFetch = window.fetch.bind(window);
+      window.fetch = async (input, init) => {
+        const url = new URL(typeof input === 'string' ? input : input.url, location.href);
+        const done = url.searchParams.get('status') === 'completed';
+        if (url.pathname === '/fetch-session-ids') return json(done ? completedList(url.searchParams) : list());
+        if (url.pathname === '/fetch-activity') return json(activity(url.searchParams));
+        const m = url.pathname.match(/^\/fetch-single-session\/(.+)$/);
+        if (m) {
+          const id = decodeURIComponent(m[1]);
+          return json(done ? completedDetail(id) : detail(id));
+        }
+        return realFetch(input, init);
+      };
+
+      const badge = document.createElement('span');
+      badge.className = 'demo-badge';
+      badge.textContent = 'DEMO';
+      document.querySelector('.tab.active').append(badge);
+    })();
+  </script>
+  <!-- =================================== END DEMO MODE =================================== -->
+
+  <script src="range-picker.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    const PER_SESSION_POLL = 2000; // ms
+    const ALL_SESSIONS_POLL = 5000; // ms
+
+    const LIST_POLL_MS = ALL_SESSIONS_POLL;   // parent: discovers new sessions, drops closed ones
+    const SESSION_POLL_MS = PER_SESSION_POLL; // each div: refreshes its own status
+
+    // Active polls both endpoints; Completed loads each once (reload the page to re-sync). Activity uses
+    // neither (see activity.js).
+    const LIVE = TAB === 'active';
+    const COMPLETED = TAB === 'completed';
+
+    const container = document.getElementById('sessions');
+    const empty = document.getElementById('empty');
+    const updated = document.getElementById('updated');
+
+    // Completed tab: range picker between the tabs and the cards. Applying a range rewrites the URL and
+    // reloads, which re-runs the one-time load.
+    const rangePicker = !COMPLETED ? null : createRangePicker(
+      Object.fromEntries(RANGE_KEYS.filter((k) => params.has(k)).map((k) => [k, params.get(k)])),
+      (range) => {
+        const q = new URLSearchParams(params);
+        for (const k of RANGE_KEYS) q.delete(k);
+        for (const [k, v] of Object.entries(range)) q.set(k, v);
+        location.search = q;
+      });
+
+    // Completed tab: totals and a JSON export of every card on the page, in list order. Each card starts
+    // as its list summary and is replaced by its detail once that loads; one whose detail fails to load
+    // is exported as the summary (no cost or tokens, so it adds nothing to the totals).
+    const report = { range: null, sessions: new Map(), loading: new Set() };
+    const totals = h('div', 'range-totals');
+    const totalCost = h('span', 'total-cost');
+    const totalTokens = h('span', 'total-tokens');
+    totals.append(h('span', 'total-label', 'Total cost:'), totalCost, h('span', 'total-label', 'Total tokens:'), totalTokens);
+    if (COMPLETED) totals.append(createSortControls());
+    const exportBtn = h('button', 'rp-btn export-btn', 'Export JSON');
+    exportBtn.type = 'button';
+    exportBtn.addEventListener('click', exportJson);
+
+    if (rangePicker) {
+      const rangeBar = document.getElementById('range-bar');
+      rangeBar.append(totals, exportBtn, rangePicker.el);
+      rangeBar.hidden = false;
+    }
+
+    function sumReport() {
+      let cost = 0, tokens = 0;
+      const unpriced = new Set();
+      for (const s of report.sessions.values()) {
+        cost += num(s.cost?.usd) ?? 0;
+        tokens += num(s.tokens?.total) ?? 0;
+        for (const m of strs(s.cost?.unpricedModels)) unpriced.add(m);
+      }
+      return { cost, tokens, unpriced: [...unpriced] };
+    }
+
+    // Placeholders until the list and every card's detail have loaded, so the numbers don't climb
+    function updateTotals() {
+      const ready = report.range && !report.loading.size;
+      const t = sumReport();
+      totalCost.textContent = ready ? `$${t.cost.toFixed(2)}` : COST_PENDING;
+      totalCost.title = ready && t.unpriced.length ? `Excludes unpriced models: ${t.unpriced.join(', ')}` : '';
+      // Already labelled "Total tokens:", so drop the card-style brackets and unit
+      totalTokens.textContent = ready ? formatTokens(t.tokens).replace(/ tk$/, '') : '—';
+      totalTokens.title = ready ? `${t.tokens.toLocaleString()} tokens · ${report.sessions.size} sessions` : '';
+      totals.classList.toggle('pending', !ready);
+      exportBtn.disabled = !ready;
+    }
+
+    // Completed tab: [↓ | ↑] order toggle (one pressed at a time) + sort-by dropdown. Either one rewrites
+    // ?sortBy / ?sortOrder and reloads, like the range picker.
+    function createSortControls() {
+      const CHEVRON = { desc: 'M3 5.5l5 5 5-5', asc: 'M3 10.5l5-5 5 5' };
+      const setSort = (key, value) => {
+        const q = new URLSearchParams(params);
+        q.set(key, value);
+        location.search = q;
+      };
+      const wrap = h('span', 'sort-controls');
+      const order = h('span', 'sort-order');
+      order.setAttribute('role', 'group');
+      order.setAttribute('aria-label', 'Sort order');
+      for (const [value, label] of [['desc', 'Descending'], ['asc', 'Ascending']]) {
+        const btn = h('button');
+        btn.type = 'button';
+        btn.title = label;
+        btn.setAttribute('aria-label', label);
+        btn.setAttribute('aria-pressed', String(value === SORT_ORDER));
+        btn.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="${CHEVRON[value]}" /></svg>`;
+        btn.addEventListener('click', () => value !== SORT_ORDER && setSort('sortOrder', value));
+        order.append(btn);
+      }
+      const by = h('select', 'sort-by');
+      by.setAttribute('aria-label', 'Sort by');
+      for (const value of SORT_BYS) {
+        const opt = h('option', null, value[0].toUpperCase() + value.slice(1));
+        opt.value = value;
+        opt.selected = value === SORT_BY;
+        by.append(opt);
+      }
+      by.addEventListener('change', () => setSort('sortBy', by.value));
+      wrap.append(order, by);
+      return wrap;
+    }
+
+    // Reorders the cards (and the export) by ?sortBy. Cost and tokens only arrive with each card's detail,
+    // so this runs once on mount (date order) and again once every detail has loaded. Ties go by start time.
+    const SORT_VALUE = { date: (s) => num(s.startedAt) ?? 0, cost: (s) => num(s.cost?.usd) ?? 0, tokens: (s) => num(s.tokens?.total) ?? 0 };
+    function sortCards() {
+      const value = SORT_VALUE[SORT_BY];
+      const dir = SORT_ORDER === 'asc' ? 1 : -1;
+      const sorted = [...report.sessions.values()].sort((a, b) => dir * (value(a) - value(b) || SORT_VALUE.date(a) - SORT_VALUE.date(b)));
+      report.sessions = new Map(sorted.map((s) => [s.sessionId, s]));
+      // Only move cards that are out of place, so settled ones don't replay their entry animation
+      let prev = null;
+      for (const s of sorted) {
+        const el = mounted.get(s.sessionId)?.el;
+        if (!el) continue;
+        const next = prev ? prev.nextElementSibling : container.firstElementChild;
+        if (el !== next) container.insertBefore(el, next);
+        prev = el;
+      }
+    }
+
+    // Downloads claude-sessions-export-<today, local>.json
+    function exportJson() {
+      const t = sumReport();
+      const body = {
+        totalCost: Math.round(t.cost * 1e6) / 1e6, // drop float noise from summing
+        totalTokens: t.tokens,
+        startDate: new Date(report.range.from).toISOString(),
+        endDate: new Date(report.range.to).toISOString(),
+        sessions: [...report.sessions.values()],
+      };
+      const a = h('a');
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(body, null, 2)], { type: 'application/json' }));
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      a.download = `claude-sessions-export-${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}.json`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+
+    // Response fields can come back null or missing (the server blanks what it can't read from Claude
+    // Code's files rather than failing), so rendering reads them through these instead of trusting them.
+    const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+    const list = (v) => (Array.isArray(v) ? v.filter((x) => x && typeof x === 'object') : []);
+    const strs = (v) => (Array.isArray(v) ? v.filter((x) => typeof x === 'string') : []);
+
+    // Small DOM helper: h('span', 'cls', 'text')
+    function h(tag, className, text) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text != null) el.textContent = text;
+      return el;
+    }
+
+    // Returns an SVG ring that drains over `ms`; call restart() each time a poll fires.
+    function createPollRing(ms) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'poll-ring');
+      svg.setAttribute('viewBox', '0 0 16 16');
+      svg.style.setProperty('--poll-ms', `${ms}ms`);
+      svg.innerHTML =
+        '<circle class="track" cx="8" cy="8" r="6.5" />' +
+        '<circle class="progress" cx="8" cy="8" r="6.5" pathLength="100" />';
+      const progress = svg.querySelector('.progress');
+      return {
+        el: svg,
+        restart() {
+          progress.style.animation = 'none';
+          progress.getBoundingClientRect(); // force reflow so the animation starts over
+          progress.style.animation = '';
+        },
+      };
+    }
+
+    const listRing = LIVE ? createPollRing(LIST_POLL_MS) : null;
+    if (listRing) updated.after(listRing.el);
+
+    // sessionId -> { el, timer }
+    const mounted = new Map();
+
+    // A node pill for the org chart: status dot + title + sub-line.
+    function createNode(extraClass) {
+      const node = h('div', `node${extraClass ? ' ' + extraClass : ''}`);
+      const text = h('span', 'node-text');
+      text.append(h('span', 'node-title'), h('span', 'node-sub'));
+      node.append(h('span', 'dot'), text);
+      return node;
+    }
+
+    function setNode(node, status, title, sub, tooltip) {
+      node.querySelector('.dot').dataset.s = status;
+      node.querySelector('.node-title').textContent = title;
+      node.querySelector('.node-sub').textContent = sub;
+      node.title = tooltip;
+    }
+
+    // Token totals, in thousands; rendered bracketed next to the cost: [180 tk] · [672k tk] · [1.8M tk]
+    function formatTokens(n) {
+      if (!Number.isFinite(n)) return '';
+      if (n < 1000) return `${n} tk`;
+      if (n < 1e6) return `${Math.round(n / 1000)}k tk`;
+      return `${(n / 1e6).toFixed(1)}M tk`;
+    }
+
+    // Context-window sizes without the unit: 850 · 100k · 1M · 1.2M
+    function formatCount(n) {
+      if (n < 1000) return String(n);
+      if (n < 1e6) return `${Math.round(n / 1000)}k`;
+      return `${+(n / 1e6).toFixed(1)}M`;
+    }
+
+    // Context-window fill: comfortable, getting full, near auto-compact
+    const CONTEXT_LEVELS = [[50, 'ok'], [80, 'warn']];
+    function contextLevel(percent) {
+      return CONTEXT_LEVELS.find(([max]) => percent < max)?.[1] ?? 'full';
+    }
+
+    // Color tier for a session's token total, sized to typical task scale: a single-turn task stays in
+    // the low thousands, a light agentic loop runs up to ~500k, and a repo-wide task reaches 0.5M–3M.
+    // Past 3M the session is an outlier worth triaging.
+    const TOKEN_TIERS = [[100_000, 'low'], [500_000, 'medium'], [1_000_000, 'high'], [3_000_000, 'very-high']];
+    function tokenTier(n) {
+      return TOKEN_TIERS.find(([max]) => n < max)?.[1] ?? 'triage';
+    }
+
+    // Shown until the first /fetch-single-session poll lands: the session list carries no cost or token
+    // data, so a card is mounted without them. CSS reserves the final width, so nothing reflows.
+    const COST_PENDING = '$—.——';
+    const TOKENS_PENDING = '[— tk]';
+    const CONTEXT_PENDING = '[—%]';
+
+    // Updates the text header and the root node of the chart. `ui` holds the card's element refs.
+    // A field that's missing or malformed renders as its pending placeholder, same as before it loads.
+    function render(ui, s) {
+      const usd = num(s.cost?.usd);
+      const unpriced = strs(s.cost?.unpricedModels);
+      ui.cost.textContent = usd !== null ? `$${usd.toFixed(2)}` : COST_PENDING;
+      ui.cost.classList.toggle('pending', usd === null);
+      ui.cost.title = unpriced.length ? `Cost excludes unpriced models: ${unpriced.join(', ')}` : '';
+      const tokens = num(s.tokens?.total);
+      ui.tokens.textContent = tokens !== null ? `[${formatTokens(tokens)}]` : TOKENS_PENDING;
+      ui.tokens.classList.toggle('pending', tokens === null);
+      if (tokens !== null) ui.tokens.dataset.tier = tokenTier(tokens);
+      else delete ui.tokens.dataset.tier;
+      ui.tokens.title = tokens !== null ? `${tokens.toLocaleString()} new tokens (input + cache writes + output) · session + all sub-agents` : '';
+      // Absent before the first detail poll; null once loaded if the main agent hasn't responded yet
+      const ctx = s.context;
+      const used = num(ctx?.used), limit = num(ctx?.limit), percent = num(ctx?.percent);
+      const ctxOk = used !== null && limit !== null && percent !== null;
+      ui.context.hidden = ctx === null;
+      ui.context.textContent = ctxOk ? `[${Math.round(percent)}%, ${formatCount(used)} / ${formatCount(limit)}]` : CONTEXT_PENDING;
+      ui.context.classList.toggle('pending', !ctxOk);
+      if (ctxOk) ui.context.dataset.level = contextLevel(percent);
+      else delete ui.context.dataset.level;
+      ui.context.title = ctxOk
+        ? `Context window${s.status === 'completed' ? ' at session end' : ''}: ${used.toLocaleString()} / ${limit.toLocaleString()} tokens (${percent}%) · ${ctx.model ?? 'unknown model'}`
+        : '';
+      const sid = String(s.sessionId ?? '');
+      const status = typeof s.status === 'string' && s.status ? s.status : 'unknown';
+      const name = typeof s.name === 'string' && s.name ? s.name : null;
+      ui.sid.textContent = sid;
+      ui.dot.dataset.s = status;
+      ui.status.textContent = status;
+      ui.name.textContent = name ?? '';
+      setNode(ui.root, status, name ?? 'Session', `${sid.slice(0, 8)} · ${status}`,
+        `session · ${sid}${s.cwd ? '\n' + s.cwd : ''}`);
+    }
+
+    const FADE_OUT_MS = 200; // keep in sync with .leaving in styles.css
+
+    // Fades an element out, then removes it. The timeout covers cases where animationend never fires.
+    function fadeOut(el) {
+      if (el.classList.contains('leaving')) return;
+      el.classList.add('leaving');
+      const remove = () => el.remove();
+      // animationend bubbles (e.g. from the poll ring), so only react to this element's own fade
+      el.addEventListener('animationend', (e) => e.target === el && remove());
+      setTimeout(remove, FADE_OUT_MS + 50);
+    }
+
+    // Keyed update of container's children: existing elements are updated in place, new ones created,
+    // and ones no longer in `items` fade out.
+    function reconcile(container, items, key, create, update) {
+      const existing = new Map();
+      for (const el of container.children) if (!el.classList.contains('leaving')) existing.set(el.dataset.key, el);
+      let prev = null;
+      for (const item of items) {
+        const k = key(item);
+        let el = existing.get(k);
+        if (el) existing.delete(k);
+        else (el = create(item)).dataset.key = k;
+        update(el, item);
+        const next = prev ? prev.nextElementSibling : container.firstElementChild;
+        if (el !== next) container.insertBefore(el, next);
+        prev = el;
+      }
+      for (const el of existing.values()) fadeOut(el);
+    }
+
+    // Org chart: one <li> per sub-agent (node pill + <ul> of its children), connectors drawn in CSS.
+    function renderTree(ul, nodes) {
+      reconcile(ul, nodes, (n) => n.agentId,
+        () => {
+          const li = document.createElement('li');
+          li.append(createNode(), h('ul', 'kids'));
+          return li;
+        },
+        (li, n) => {
+          const [node, kids] = li.children;
+          const type = n.agentType ?? 'agent';
+          const status = n.status ?? 'unknown';
+          li.className = `s-${status}`;
+          setNode(node, status, n.description ?? n.agentId ?? 'agent', `${type} · ${status}`,
+            `${n.description ? n.description + '\n' : ''}${type} · ${n.agentId}`);
+          renderTree(kids, list(n.children));
+        });
+    }
+
+    // Overlay for running edges: one continuous dashed path from each running agent's parent to it.
+    // Paths are updated in place (not recreated) so the dash animation doesn't restart every poll.
+    function createWires() {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'wires');
+      svg.innerHTML = '<path class="wire-halo" /><path class="wire" />';
+      return svg;
+    }
+
+    function drawWires(tree, svg) {
+      // Position relative to .tree via offsets, which ignore the node-in transform animation.
+      const at = (el) => {
+        let x = 0, y = 0;
+        for (let e = el; e && e !== tree; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+        return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+      };
+      let d = '';
+      for (const li of tree.querySelectorAll('li.s-running')) {
+        if (li.closest('.leaving')) continue;
+        const p = at(li.parentElement.previousElementSibling); // parent's node pill
+        const c = at(li.firstElementChild);                    // this agent's node pill
+        const trunk = at(li).x + 1;                            // the vertical bus sits on li's left edge
+        d += `M${p.x + p.w},${p.y + p.h / 2}H${trunk}V${c.y + c.h / 2}H${c.x}`;
+      }
+      for (const path of svg.children) path.setAttribute('d', d);
+    }
+
+    // One nested div per sub-agent; children render inside their parent's div.
+    function renderSubagents(container, nodes) {
+      reconcile(container, nodes, (n) => n.agentId,
+        () => {
+          const el = document.createElement('div');
+          const label = h('span', 'sa-label');
+          label.append(h('span', 'dot'), h('span', 'sa-desc'), h('span', 'sa-status'));
+          el.append(label, document.createElement('div'));
+          return el;
+        },
+        (el, n) => {
+          const [label, children] = el.children;
+          const [dot, desc, status] = label.children;
+          const s = n.status ?? 'unknown';
+          el.className = `subagent status-${s}`;
+          dot.dataset.s = s;
+          desc.textContent = n.description ?? n.agentId ?? 'agent';
+          status.textContent = s;
+          label.title = `${n.agentType ?? 'agent'} · ${n.agentId}`;
+          renderSubagents(children, list(n.children));
+        });
+    }
+
+    function formatIn(ms) {
+      if (ms <= 0) return 'due now';
+      const mins = Math.round(ms / 60000);
+      if (mins < 1) return 'in <1 min';
+      if (mins < 60) return `in ${mins} min${mins === 1 ? '' : 's'}`;
+      const hours = Math.round(mins / 60);
+      if (hours < 48) return `in ${hours} hour${hours === 1 ? '' : 's'}`;
+      return `in ${Math.round(hours / 24)} days`;
+    }
+
+    function renderScheduled(container, jobs) {
+      reconcile(container, jobs, (j) => j.id,
+        () => {
+          const el = document.createElement('div');
+          el.append(h('span', 'job-tag', 'Scheduled'), h('span', 'job-name'), h('span', 'job-when'));
+          return el;
+        },
+        (el, j) => {
+          const next = num(j.nextRunAt);
+          el.querySelector('.job-name').textContent = j.prompt ?? '';
+          el.querySelector('.job-when').textContent = next === null ? '' : formatIn(next - Date.now());
+          el.title = `${j.humanSchedule ?? j.cron ?? ''} · job ${j.id}`;
+        });
+    }
+
+    function updateEmpty() {
+      empty.textContent = mounted.size ? '' : LIVE ? 'No active sessions.' : 'No completed sessions in this range.';
+    }
+
+    // The card's raw session JSON (what Export JSON writes for it) with a Copy button. Active cards refresh it
+    // every poll, but the text is only rewritten when it changes, so a selection survives quiet polls.
+    function createJsonBlock() {
+      const wrap = h('div', 'json-block');
+      const pre = h('pre', 'json-body');
+      const copy = h('button', 'json-copy', 'Copy');
+      copy.type = 'button';
+      let reset;
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(pre.textContent);
+          copy.textContent = 'Copied';
+        } catch {
+          copy.textContent = 'Copy failed';
+        }
+        clearTimeout(reset);
+        reset = setTimeout(() => (copy.textContent = 'Copy'), 1500);
+      });
+      wrap.append(pre, copy);
+      return {
+        el: wrap,
+        set(obj) {
+          const text = JSON.stringify(obj, null, 2);
+          if (pre.textContent !== text) pre.textContent = text;
+        },
+      };
+    }
+
+    function mount(session) {
+      const el = h('div', 'session');
+      el.dataset.sessionId = session.sessionId;
+
+      // Org chart (session root + nested sub-agents)
+      const viz = h('div', 'viz');
+      const tree = h('div', 'tree');
+      const rootBranch = h('div', 'branch');
+      const root = createNode('root');
+      const kids = h('ul', 'kids');
+      rootBranch.append(root, kids);
+      const wires = createWires();
+      tree.append(rootBranch, wires);
+      viz.append(tree);
+      // Redraw when the tree reflows, e.g. after a removed node finishes fading out
+      new ResizeObserver(() => drawWires(tree, wires)).observe(tree);
+
+      // Hide/show the chart. Height animates between explicit pixel values, then returns to auto
+      // once expanded so the chart can still grow as sub-agents arrive.
+      const vizWrap = h('div', 'viz-wrap');
+      const minimize = h('button', 'viz-btn viz-minimize', '− Hide');
+      const expand = h('button', 'viz-btn viz-expand', '+ Show');
+      minimize.type = expand.type = 'button';
+      vizWrap.append(viz, minimize, expand);
+      function setVizCollapsed(collapsed) {
+        vizWrap.style.height = `${vizWrap.offsetHeight}px`;
+        vizWrap.offsetHeight; // commit the start height so the change below transitions
+        vizWrap.classList.toggle('collapsed', collapsed);
+        vizWrap.style.height = collapsed ? '' : `${viz.offsetHeight}px`;
+        // Reduced motion disables the transition, so transitionend never fires to restore auto height
+        if (!collapsed && getComputedStyle(vizWrap).transitionDuration === '0s') vizWrap.style.height = '';
+      }
+      vizWrap.addEventListener('transitionend', (e) => {
+        if (e.target === vizWrap && e.propertyName === 'height' && !vizWrap.classList.contains('collapsed')) {
+          vizWrap.style.height = '';
+        }
+      });
+      minimize.addEventListener('click', () => setVizCollapsed(true));
+      expand.addEventListener('click', () => setVizCollapsed(false));
+
+      // Metadata line (cost, id, status, name) sits above the chart
+      const header = h('div', 'session-header');
+      const ui = {
+        root, kids,
+        cost: h('span', 'cost'),
+        sid: h('span', 'sid'),
+        dot: h('span', 'dot'),
+        status: h('span'),
+        name: h('span', 'sname'),
+        tokens: h('span', 'tokens'),
+        context: h('span', 'context'),
+      };
+      const statusWrap = h('span', 'sstatus');
+      statusWrap.append(ui.dot, ui.status);
+      header.append(ui.cost, ui.tokens, ui.context, statusWrap, ui.name, ui.sid);
+      // Text details (nested sub-agent list, scheduled jobs, raw JSON), hidden until expanded. The JSON
+      // starts as the list summary and becomes the full detail once that loads.
+      const details = h('div', 'details');
+      details.hidden = true;
+      const subagents = h('div', 'subagents');
+      const scheduled = h('div', 'scheduled');
+      const json = createJsonBlock();
+      json.set(session);
+      details.append(subagents, scheduled, json.el);
+
+      const toggle = h('button', 'expand-toggle');
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', 'false');
+      const toggleLabel = h('span', null, 'Expand');
+      toggle.append(toggleLabel, h('span', 'chevron'));
+      toggle.addEventListener('click', () => {
+        const open = details.hidden;
+        details.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        toggleLabel.textContent = open ? 'Collapse' : 'Expand';
+      });
+
+      el.append(header, vizWrap, details, toggle);
+      render(ui, session);
+      container.appendChild(el);
+
+      async function load() {
+        try {
+          const res = await fetch(`/fetch-single-session/${encodeURIComponent(session.sessionId)}?status=${TAB}`);
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || res.statusText);
+          if (data.status === 'closed') return unmount(session.sessionId);
+          if (!mounted.has(session.sessionId)) return;
+          if (!LIVE) report.sessions.set(session.sessionId, data);
+          render(ui, data);
+          renderTree(kids, list(data.subagents));
+          drawWires(tree, wires);
+          renderSubagents(subagents, list(data.subagents));
+          renderScheduled(scheduled, list(data.scheduledJobs));
+          json.set(data);
+        } catch (err) {
+          console.warn(`load failed for ${session.sessionId}:`, err);
+        }
+      }
+
+      let timer = null;
+      if (LIVE) {
+        const ring = createPollRing(SESSION_POLL_MS);
+        header.append(ring.el);
+        timer = setInterval(() => (ring.restart(), load()), SESSION_POLL_MS);
+      } else {
+        report.sessions.set(session.sessionId, session);
+        report.loading.add(session.sessionId);
+        // fetch awaits before the mounted check, so the set() below lands first
+        load().finally(() => {
+          report.loading.delete(session.sessionId);
+          if (!report.loading.size) sortCards();
+          updateTotals();
+        });
+      }
+
+      mounted.set(session.sessionId, { el, timer });
+      updateEmpty();
+    }
+
+    function unmount(sessionId) {
+      const entry = mounted.get(sessionId);
+      if (!entry) return;
+      clearInterval(entry.timer);
+      fadeOut(entry.el);
+      mounted.delete(sessionId);
+      updateEmpty();
+    }
+
+    async function refreshList() {
+      listRing?.restart();
+      try {
+        const q = new URLSearchParams({ status: TAB });
+        if (!LIVE) for (const k of RANGE_KEYS) if (params.has(k)) q.set(k, params.get(k));
+        const res = await fetch(`/fetch-session-ids?${q}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+
+        // Any mounted session missing from the list has closed.
+        const sessions = list(data.sessions).filter((s) => typeof s.sessionId === 'string');
+        const live = new Set(Array.isArray(data.sessionIds) ? data.sessionIds : sessions.map((s) => s.sessionId));
+        for (const id of [...mounted.keys()]) if (!live.has(id)) unmount(id);
+        for (const s of sessions) if (!mounted.has(s.sessionId)) mount(s);
+        if (COMPLETED) sortCards();
+
+        updateEmpty();
+        // updated.textContent = `Updated ${new Date(data.fetchedAt).toLocaleTimeString()}`;
+        if (num(data.range?.from) !== null && num(data.range?.to) !== null) {
+          rangePicker?.setResolved(data.range);
+          report.range = data.range;
+          updateTotals(); // an empty range has nothing left to load
+        }
+      } catch (err) {
+        updated.textContent = `Error: ${err.message}`;
+        if (COMPLETED) empty.textContent = ''; // drop the spinner; the error shows up top
+      }
+    }
+
+    if (TAB === 'activity') renderActivity(document.getElementById('activity'), empty, params);
+    else {
+      if (COMPLETED) {
+        updateTotals(); // placeholders while loading
+        // The list can take several seconds; the countdown ring doubles as a spinner until it lands.
+        const spinner = createPollRing(0).el;
+        spinner.classList.add('spinning');
+        empty.replaceChildren(h('span', 'loading', null));
+        empty.firstChild.append(spinner, 'Loading');
+      }
+      refreshList();
+      if (LIVE) setInterval(refreshList, LIST_POLL_MS);
+    }
+  </script>
+</body>
+
+</html>

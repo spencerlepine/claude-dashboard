@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="375 374 752 752" width="512" height="512" role="img" aria-label="Robot icon">
+  <!-- Head body with screen cut out (transparent) -->
+  <path fill="#000" fill-rule="evenodd" d="
+    M525 632 H977 A80 80 0 0 1 1057 712 V970 A90 90 0 0 1 967 1060 H535 A90 90 0 0 1 445 970 V712 A80 80 0 0 1 525 632 Z
+    M608 698 H893 A75 75 0 0 1 968 773 V920 A75 75 0 0 1 893 995 H608 A75 75 0 0 1 533 920 V773 A75 75 0 0 1 608 698 Z"/>
+  <!-- Ears -->
+  <path fill="#000" d="M446 748 H435 Q415 748 415 768 V925 Q415 945 435 945 H446 Z"/>
+  <path fill="#000" d="M1056 748 H1067 Q1087 748 1087 768 V925 Q1087 945 1067 945 H1056 Z"/>
+  <!-- Eyes -->
+  <rect x="594" y="783" width="96" height="126" rx="20" fill="#000"/>
+  <rect x="811" y="783" width="96" height="126" rx="20" fill="#000"/>
+  <!-- Antenna base -->
+  <path fill="#000" d="M650 634 Q662 612 727 604 H775 Q840 612 852 634 Z"/>
+  <!-- Antenna stem + bulb -->
+  <path fill="#000" d="M727 612 V590 C727 540 735 500 758 478 C775 452 808 440 835 442 C860 446 875 468 873 495 C870 525 838 545 802 542 C785 541 775 550 775 572 V612 Z"/>
+</svg>
